@@ -1,0 +1,91 @@
+1 A  	1001          DDRA   EQU   $1001
+2 A  	1009          DDRD   equ   $1009
+3 A  	1003          DDRG   EQU   $1003
+4 A  	10          DDRR   equ   $10
+5 A  	20          DDRR   equ   $20
+6 A  	20          DDRI   equ   $20
+7 A  	*DDRF   equ   $201
+8 A  	*DR   eQu   $11 
+9 A  	31          ABCD   equ $31
+10 A  	
+11 A  	8000		ORG $8000 *ia me quiero morir
+12 A  	
+13 A 8000	26FFFFFFFE			BNE CICLO 
+14 A 8002	89FF			    ADCA #$FF *hola
+15 A 8004	99FF			    ADCA $FF *hola2
+16 A 8006	B9FFAA			    ADCA $FFAA *hola3
+17 A  	*    YYY #$F1
+18 A  	    *bcc #$F2
+19 A  	*    ADCA #DDRA
+20 A 8009	B91001			    ADCA DDRA
+21 A 800C	8920			    ADCA #DDRR
+22 A 800E	9920			    ADCA DDRR
+23 A  	*    ADCA #DDRB
+24 A  	*    ADCA DDRB
+25 A  	    *adca #$FFF
+26 A  	    *adca $FFF
+27 A  	    *adca FFF
+28 A 8010	C961			    adcb #'a
+29 A 8012	D961			    adcb 'a
+30 A  	    *adcb 'ab *Esto no se puede
+31 A 8014	C996			    adCB #150
+32 A 8016	D996			    adCB 150
+33 A 8018	F93A98			    adCB 15000
+34 A 801B	9D11			    JSR $11
+35 A 801D	781212			    ASL $1212
+36 A 8022	1414	FCB $14,$14
+37 A 8024	1211    fcb $12,$11
+38 A  	    *END
+39 A  	
+40 A  	*    LDAA #DDRF,X *tamaño incorrecto, mnemomico existente, usa variable ----------------- correcto
+41 A 8024	A620			    LDAA #DDRI,X *tamaño correcto, mnemomico existente, usa variable ----------------- correcto
+42 A 8026	              
+43 A  	*    LDD $172,y *tamaño incorrecto, mnemomico existente, no usa variable ----------------- correcto
+44 A 8026	18EC84			    LDD 132,Y  *tamaño correcto, mnemomico existente, valor decimal  ----------------- correcto
+45 A 8029	              
+46 A 8029	A620			    LdAa #DDRR,x *reconice constante ----------------- correcto
+47 A  	    *LdAa 1331,X *decimal y tamaño incorrecto ----------------- correcto
+48 A 802B	A631			    LdAa ABCD,X *reconice variable ----------------- correcto 
+49 A 802D	A631			    LdAa #ABCD,X *reconice constante ----------------- correcto
+50 A 802F	A620			    LDAA DDRR,X *   reconice variable ----------------- correcto
+51 A  	    *LDD $17A,X  * longitud erronea----------------- correcto
+52 A  	    *LDAA DDAD,X *variable inexistente ----------------- correcto
+53 A 8031	EC17			    LDD $17,x * es octal ----------------- correcto
+54 A 8033	ECA7			    LDD $A7,X * es hexagecimal ----------------- correcto
+55 A  	    *ldn $172,X  *no existe mnemonico ----------------- correcto
+56 A  	
+57 A  	    *LDAB $672,y *tamaño incorrecto, mnemomico existente, no usa variable ----------------- correcto
+58 A 8035	CDEE6F			    LDX 111,Y  **tamaño correcto, mnemomico existente, valor decimal  por probar ----------------- correcto
+59 A 8035	
+60 A  	    *LDAA #DDRF,y *tamaño incorrecto, mnemomico existente, usa variable ----------------- correcto
+61 A 8038	18A620			    LDAA #DDRI,Y *tamaño correcto, mnemomico existente, usa variable ----------------- correcto
+62 A 803B	              
+63 A  	    *LDD $172,Y *tamaño incorrecto, mnemomico existente, no usa variable ----------------- correcto
+64 A 803B	18EC84			    LDD 132,Y  *tamaño correcto, mnemomico existente, valor decimal  ----------------- correcto
+65 A 803E	              
+66 A 803E	18A620			    LdAa #DDRR,Y *reconice constante ----------------- correcto
+67 A  	    *LdAa 1331,y *decimal y tamaño incorrecto ----------------- correcto
+68 A 8041	18A631			    LdAa ABCD,Y *reconice variable ----------------- correcto 
+69 A 8044	18A631			    LdAa #ABCD,y *reconice constante ----------------- correcto
+70 A 8047	18A620			    LDAA DDRR,Y *   reconice variable ----------------- correcto
+71 A  	    *LDD $17A,y  * longitud erronea----------------- correcto
+72 A  	    *LDAA DDAD,y *variable inexistente ----------------- correcto
+73 A 804A	18EC17			    LDD $17,y * es octal ----------------- correcto
+74 A  	    *LDD $A7,y  es hexagecimal ----------------- correcto
+75 A  	    *ldn $172,y  no existe mnemonico ----------------- correcto
+76 A 804D	              
+77 A 804D	
+78 A 804D	18EC73			    LDD 's,Y * 
+79 A 8050	18EC53			    LDD 'S,y * 
+80 A  	    *LDD 'se,Y *
+81 A 8053	              
+82 A 8053	EC73			    LDD 's,X * 
+83 A 8055	EC53			    LDD 'S,X * 
+84 A  	    *LDD 'se,X * 
+85 A  	
+86 A  	    *FCB $14,15 *si ves esto dale like
+87 A 805A	141516    FCB $14,$15 $16 *si ves esto dale likex2
+88 A  		FCB 
+89 A 805A		FCB *ojo aquí
+90 A  	*    FCB esto no se puede
+91 A   		END *Esto sí se puede
