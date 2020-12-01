@@ -82,14 +82,14 @@ public class Excepciones {
         son al menos 3 palabras que debe contener la linea para que sea una instrucción de excepcion*/
         if(pasada == 1){
             if(numTotalPalabra==1){
-                mensaje= "\u001B[31m ERROR 005: INSTRUCCIÓN CARECE DE  OPERANDO(S) \u001B[0m\n";
+                mensaje= line+"\n\t\t\t^\u001B[31m ERROR 005: INSTRUCCIÓN CARECE DE  OPERANDO(S) \u001B[0m\n";
                 //Guardamos la salida de la primer pasada
                 Output outPut = new Output(mensaje);
                 metodosDeLectura.salidas.add(outPut);
                 return line + "\n\t\t\t^ERROR 005: INSTRUCCIÓN CARECE DE  OPERANDO(S)";
             }else if(numTotalPalabra<=2){
                 System.out.println("");
-                mensaje= "\u001B[31m Error: Los mnemonicos de excepción deben tener más de un operando. \u001B[0m\n";
+                mensaje= line+"\n\t\t\t^\u001B[31m Error: Los mnemonicos de excepción deben tener más de un operando. \u001B[0m\n";
                 //Guardamos la salida de la primer pasada
                 Output outPut = new Output(mensaje);
                 metodosDeLectura.salidas.add(outPut);
@@ -141,12 +141,12 @@ public class Excepciones {
                             if(numTotalPalabra==3){ //Es directo pues si tiviera X o Y tendria 4 palabras
                                 
                                 /* Como el opcode que le corresponde es el del modo DIRECTO,
-                                al conteo de memoria le debemos sumar 3 (número de bytes que ocupa el opcode con el operando)
+                                al conteo de memoria le debemos sumar 2 (número de bytes que ocupa el opcode con el operando)
                                 */
-                                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 3;
+                                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                 
                                     if(palabraNueva.contains("#")){
-                                        mensaje = "\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo \u001B[0m\n";
+                                        mensaje = line+"\n\t\t\t^\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo \u001B[0m\n";
                                         
                                         //Guardamos la salida de la primer pasada
                                         Output outPut = new Output(mensaje);
@@ -189,9 +189,9 @@ public class Excepciones {
                                     if(palabraXY.equals("X")){
                                         
                                         /* Como el opcode que le corresponde es el del modo INDEXADO con respecto a X,
-                                        al conteo de memoria le debemos sumar 3 (número de bytes que ocupa el opcode con el operando)
+                                        al conteo de memoria le debemos sumar 2 (número de bytes que ocupa el opcode con el operando)
                                         */
-                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 3;
+                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                         
                                         if(palabraNueva.startsWith("$")){
                                             //Se quita $
@@ -222,9 +222,9 @@ public class Excepciones {
                                     }else if(palabraXY.equals("Y")){
                                         
                                         /* Como el opcode que le corresponde es el del modo INDEXADO con respecto a Y,
-                                        al conteo de memoria le debemos sumar 4 (número de bytes que ocupa el opcode con el operando)
+                                        al conteo de memoria le debemos sumar 3 (número de bytes que ocupa el opcode con el operando)
                                         */
-                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 4;
+                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 3;
                                         if(palabraNueva.startsWith("$")){
                                             //Se quita $
                                             palabraNueva = palabraNueva.replace('$', ' ');
@@ -253,7 +253,7 @@ public class Excepciones {
                                         }
                                     }else{
                                         
-                                        mensaje ="\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
+                                        mensaje =line+"\n\t\t\t^\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
                                         //Guardamos la salida de la primer pasada
                                         Output outPut = new Output(mensaje);
                                         metodosDeLectura.salidas.add(outPut);
@@ -261,7 +261,7 @@ public class Excepciones {
                                     }    
                             }
                         }else{
-                                    mensaje = "\u001B[31m Error : BCLR debe tener 2 operandos.\u001B[0m\n";
+                                    mensaje = line+"\n\t\t\t^\u001B[31m Error : BCLR debe tener 2 operandos.\u001B[0m\n";
                                     //Guardamos la salida de la primer pasada
                                     Output outPut = new Output(mensaje);
                                     metodosDeLectura.salidas.add(outPut);
@@ -278,12 +278,12 @@ public class Excepciones {
                             if(numTotalPalabra==3){ //Es directo pues si tiviera X o Y tendria 4 palabras
                                 
                                 /* Como el opcode que le corresponde es el del modo DIRECTO,
-                                al conteo de memoria le debemos sumar 3 (número de bytes que ocupa el opcode con el operando)
+                                al conteo de memoria le debemos sumar 2 (número de bytes que ocupa el opcode con el operando)
                                 */
-                                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 3;
+                                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                 
                                     if(palabraNueva.contains("#")){
-                                        mensaje = "\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo. \u001B[0m \n";
+                                        mensaje = line+"\n\t\t\t^\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo. \u001B[0m \n";
                                         //Guardamos la salida de la primer pasada
                                         Output outPut = new Output(mensaje);
                                         metodosDeLectura.salidas.add(outPut);
@@ -324,9 +324,9 @@ public class Excepciones {
                                     if(palabraXY.equals("X")){
                                         
                                         /* Como el opcode que le corresponde es el del modo INDEXADO con respecto a X,
-                                        al conteo de memoria le debemos sumar 3 (número de bytes que ocupa el opcode con el operando)
+                                        al conteo de memoria le debemos sumar 2 (número de bytes que ocupa el opcode con el operando)
                                         */
-                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 3;
+                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                         
                                         if(palabraNueva.startsWith("$")){
                                             //Se quita $
@@ -354,9 +354,9 @@ public class Excepciones {
                                     }else if(palabraXY.equals("Y")){
                                         
                                         /* Como el opcode que le corresponde es el del modo INDEXADO con respecto a Y,
-                                        al conteo de memoria le debemos sumar 4 (número de bytes que ocupa el opcode con el operando)
+                                        al conteo de memoria le debemos sumar 3 (número de bytes que ocupa el opcode con el operando)
                                         */
-                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 4;
+                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 3;
                                         
                                         if(palabraNueva.startsWith("$")){
                                             //Se quita $
@@ -384,7 +384,7 @@ public class Excepciones {
                                         }
                                     }else{
                                         
-                                        mensaje = "\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
+                                        mensaje = line+"\n\t\t\t^\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
                                         //Guardamos la salida de la primer pasada
                                         Output outPut = new Output(mensaje);
                                         metodosDeLectura.salidas.add(outPut);
@@ -393,7 +393,7 @@ public class Excepciones {
                                     }
                             }
                         }else{
-                            mensaje = "\u001B[31m Error : BSET debe tener 2 operandos.\u001B[0m\n";
+                            mensaje = line+"\n\t\t\t^\u001B[31m Error : BSET debe tener 2 operandos.\u001B[0m\n";
                             //Guardamos la salida de la primer pasada
                             Output outPut = new Output(mensaje);
                             metodosDeLectura.salidas.add(outPut);
@@ -412,7 +412,7 @@ public class Excepciones {
                                 /* Como el opcode que le corresponde es el del modo DIRECTO,
                                 al conteo de memoria le debemos sumar 4 (número de bytes que ocupa el opcode con el operando)
                                 */
-                                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 4;
+                                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                 
                                
                                     if(palabraNueva.contains("#")){
@@ -462,9 +462,9 @@ public class Excepciones {
                                         System.out.println("es indexado con respecto a X");
                                         
                                         /* Como el opcode que le corresponde es el del modo INDEXADO con respecto a X,
-                                        al conteo de memoria le debemos sumar 4 (número de bytes que ocupa el opcode con el operando)
+                                        al conteo de memoria le debemos sumar 2 (número de bytes que ocupa el opcode con el operando)
                                         */
-                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 4;
+                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                         
                                         if(palabraNueva.startsWith("$")){
                                             //Se quita $
@@ -498,9 +498,9 @@ public class Excepciones {
                                         System.out.println("es indexado con respecto a Y");
                                         
                                         /* Como el opcode que le corresponde es el del modo INDEXADO con respecto a Y,
-                                        al conteo de memoria le debemos sumar 5 (número de bytes que ocupa el opcode con el operando)
+                                        al conteo de memoria le debemos sumar 3 (número de bytes que ocupa el opcode con el operando)
                                         */
-                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 5;
+                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 3;
                                         
                                         if(palabraNueva.startsWith("$")){
                                             //Se quita $
@@ -539,7 +539,7 @@ public class Excepciones {
                                         }
                             }
                         }else{
-                            mensaje = "\u001B[31m Error: BRCLR debe tener 3 operandos. \u001B[0m\n";
+                            mensaje = line+"\n\t\t\t^\u001B[31m Error: BRCLR debe tener 3 operandos. \u001B[0m\n";
                             //Guardamos la salida de la primer pasada
                             Output outPut = new Output(mensaje);
                             metodosDeLectura.salidas.add(outPut);
@@ -557,12 +557,12 @@ public class Excepciones {
                             if(numTotalPalabra==4){//Es directo pues si tiviera X o Y tendria 5 palabras
                                 
                                 /* Como el opcode que le corresponde es el del modo DIRECTO,
-                                al conteo de memoria le debemos sumar 4 (número de bytes que ocupa el opcode con el operando)
+                                al conteo de memoria le debemos sumar 2 (número de bytes que ocupa el opcode con el operando)
                                 */
-                                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 4;
+                                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                 
                                     if(palabraNueva.contains("#")){
-                                        System.out.println("\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo. \u001B[0m\n");
+                                        System.out.println(line+"\n\t\t\t^\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo. \u001B[0m\n");
                                         //Guardamos la salida de la primer pasada
                                         Output outPut = new Output(mensaje);
                                         metodosDeLectura.salidas.add(outPut);
@@ -608,9 +608,9 @@ public class Excepciones {
                                         System.out.println("es indexado con respecto a X");
                                         
                                         /* Como el opcode que le corresponde es el del modo INDEXADO con respecto a X,
-                                        al conteo de memoria le debemos sumar 4 (número de bytes que ocupa el opcode con el operando)
+                                        al conteo de memoria le debemos sumar 2 (número de bytes que ocupa el opcode con el operando)
                                         */
-                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 4;
+                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                         
                                         if(palabraNueva.startsWith("$")){
                                             //Se quita $
@@ -644,9 +644,9 @@ public class Excepciones {
                                         System.out.println("es indexado con respecto a Y");
                                         
                                         /* Como el opcode que le corresponde es el del modo INDEXADO con respecto a Y,
-                                        al conteo de memoria le debemos sumar 5 (número de bytes que ocupa el opcode con el operando)
+                                        al conteo de memoria le debemos sumar 3 (número de bytes que ocupa el opcode con el operando)
                                         */
-                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 5;
+                                        metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 3;
                                         
                                         if(palabraNueva.startsWith("$")){
                                             //Se quita $
@@ -678,7 +678,7 @@ public class Excepciones {
                                         }
                                     }else{
                                         //Creo que este error es una de sintaxis, porque entra a este caso cuando se entra al caso de indexado pero no tiene X o Y 
-                                        mensaje = "\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
+                                        mensaje = line+"\n\t\t\t^\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
                                         //Guardamos la salida de la primer pasada
                                         Output outPut = new Output(mensaje);
                                         metodosDeLectura.salidas.add(outPut);
@@ -686,7 +686,7 @@ public class Excepciones {
                                     }
                             }
                         }else{
-                            mensaje = "\u001B[31m Error: BRSET debe tener 3 operandos.\u001B[0m\n";
+                            mensaje = line+"\n\t\t\t^\u001B[31m Error: BRSET debe tener 3 operandos.\u001B[0m\n";
                             //Guardamos la salida de la primer pasada
                             Output outPut = new Output(mensaje);
                             metodosDeLectura.salidas.add(outPut);
@@ -698,6 +698,7 @@ public class Excepciones {
             
             if(numPalabra==2){ //Segundo operando o tercer palabra
                 //Ya esta concatenada desde el swich case, pues se necesitaba para elegir el opcode de la instruccion.
+                
                 System.out.println("La segunda palabra es: "+palabra);
                 if(palabra.equals("X")||palabra.equals("X")){
                     String tercerPalabra = palabra;
@@ -709,7 +710,7 @@ public class Excepciones {
                         //Se quita $ o #
                         if (palabra.startsWith("$")){
                             
-                            mensaje = "\u001B[31m Error: El segundo operando siempre debe ser inmediato. \u001B[0m\n";
+                            mensaje = line+"\n\t\t\t^\u001B[31m Error: El segundo operando siempre debe ser inmediato. \u001B[0m\n";
                             //Guardamos la salida de la primer pasada
                             Output outPut = new Output(mensaje);
                             metodosDeLectura.salidas.add(outPut);
@@ -722,7 +723,7 @@ public class Excepciones {
                             palabra=palabra.substring(2); //Quitamos los dos espacios
                             //Comprobamos que el tamaño del operando sea un número par de bytes
                             if((palabra.length())%2!=0||(palabra.length())>2){
-                                mensaje = "\u001B[31m Error 007: MAGNITUD DE  OPERANDO ERRONEA. \u001B[0m\n";
+                                mensaje = line+"\n\t\t\t^\u001B[31m Error 007: MAGNITUD DE  OPERANDO ERRONEA. \u001B[0m\n";
                                 //Guardamos la salida de la primer pasada
                                 Output outPut = new Output(mensaje);
                                 metodosDeLectura.salidas.add(outPut);
@@ -730,7 +731,8 @@ public class Excepciones {
                                 
                             }else
                             //Hay que incrementar en conteo de bytes de memoria según el tamaño del segundo operando
-                            numMemoria = numMemoria + (palabra.length())/2;
+                                
+                            metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + (palabra.length())/2;
                         }
                                                 
                         newLine=newLine.concat("\u001B[41;33m"+palabra+"\u001B[0m"+" ");
@@ -746,14 +748,14 @@ public class Excepciones {
                             op=Integer.toHexString(opN).toUpperCase();
                             //Comprobamos que el tamaño del operando sea un número par de bytes
                             if((op.length())%2!=0||(palabra.length())>2){
-                                mensaje = "\u001B[31m Error 007: MAGNITUD DE  OPERANDO ERRONEA. \u001B[0m\n";
+                                mensaje = line+"\n\t\t\t^\u001B[31m Error 007: MAGNITUD DE  OPERANDO ERRONEA. \u001B[0m\n";
                                 //Guardamos la salida de la primer pasada
                                 Output outPut = new Output(mensaje);
                                 metodosDeLectura.salidas.add(outPut);
                                 return line + "\n\t\t\t^Error 007: MAGNITUD DE  OPERANDO ERRONEA.";
                             }else
                             //Hay que incrementar en conteo de bytes de memoria según el tamaño del segundo operando
-                            numMemoria = numMemoria + (palabra.length())/2;
+                            metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + (palabra.length())/2;
                             
                             System.out.println(op+"Es el operando en hexadecimal");
                             instruccion=instruccion.concat(op);
@@ -763,7 +765,7 @@ public class Excepciones {
                             
                             System.out.println("La linea resultante es: " +newLine);
                         }else{
-                            mensaje = "\u001B[31m Error: El segundo operando siempre debe ser inmediato. \u001B[0m\n";
+                            mensaje = newLine+"\n\t\t\t^\u001B[31m Error: El segundo operando siempre debe ser inmediato. \u001B[0m\n";
                             //Guardamos la salida de la primer pasada
                             Output outPut = new Output(mensaje);
                             metodosDeLectura.salidas.add(outPut);
@@ -781,7 +783,8 @@ public class Excepciones {
                 Hay que incrementar en 1 el contador de bytes de memoria para dejar el espacios del salto
                 que debe ser de 1 byte.
                 */
-                numMemoria = numMemoria + 1;
+                metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 1;
+                
                 
                 mensaje = newLine + palabra; 
                 /*Guardamos la salida de la primer pasada(que contiene el opcode y el valor en hexadecimal
@@ -793,14 +796,15 @@ public class Excepciones {
             }
             
         }
+        
         //Guardamos la salida de la primer pasada
-        Output outPut = new Output(newLine+"\n");
+        Output outPut = new Output(newLine+"\t\t\t"+line+"\n");
         metodosDeLectura.salidas.add(outPut);
         return newLine2 + line;
     }
     if (pasada == 2){
         //Nos ayuda a identificar si hay un error en la etiqueta
-        
+        boolean indexY = false;
         StringTokenizer st = new StringTokenizer (line);
         String etiqueta = ""; //Nos sorve para guardar la etiqueta que vamos a verificar
         String inicio = ""; //Guardamos las pirmeras 4 palabras de la línea
@@ -818,12 +822,17 @@ public class Excepciones {
                 System.out.println("Inicio : " + ini);
            }else if (i==3){
                
-               Opcode = palabra; 
+               Opcode = palabra;
+               System.out.println("*******Tamaño sin salto: " + Opcode.length());
+               if(Opcode.length()==8){
+                   indexY=true;
+                   System.out.println("*********Es indexado en Y");
+               }
            }else if (i==4){
                etiqueta = palabra;
            }
         }
-        newLine = verificarEtiqueta(etiqueta, VCE, posMem);
+        newLine = verificarEtiqueta(etiqueta, VCE, posMem,indexY);
         
         line = "";
         //Guardamos el resto de la línea que corresponde a la línea original
@@ -849,18 +858,22 @@ public class Excepciones {
     return newLine;
     }
     
-    public String verificarEtiqueta(String palabra, Var_Cons_Etiq VCE, int numMem){
+    public String verificarEtiqueta(String palabra, Var_Cons_Etiq VCE, int numMem, boolean indexY){
         
         //Pos no ayuda a guardar la posición de la etiqueta
         int pos = 0;
         int salto = 0;
+        
+        if(indexY){
+            numMem = numMem + 1;
+        }
         
         //Buscar si existe esa etiqueta                    
         pos = VCE.buscarEtiqueta(palabra);
         System.out.println("pos: " + pos);
         if (pos == 0){
             error = true;
-            System.out.println("\u001B[31m Error 003: ETIQUETA INEXISTENTE \u001B[0m");
+            System.out.println(palabra +"\u001B[31m Error 003: ETIQUETA INEXISTENTE \u001B[0m");
             return "\n\t\t\t^Error 003: ETIQUETA INEXISTENTE";
         }else{
             
@@ -917,11 +930,14 @@ public class Excepciones {
                     if(hexadecimal.length()==1){
                         hexadecimal = "0" + hexadecimal;
                     }
+                    if (hexadecimal.length()>2){
+                        hexadecimal = hexadecimal.substring(hexadecimal.length()-2);
+                    }
                     return hexadecimal;
                               
                 }else{
                     error = true;
-                    System.out.println("\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
+                    System.out.println(palabra+"\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
                     return "\n\t\t\t^Error 008: SALTO RELATIVO MUY LEJANO";
                 }
             }else{
@@ -939,7 +955,7 @@ public class Excepciones {
                     return hexadecimal;
                 }else{
                     error = true;
-                    System.out.println("\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
+                    System.out.println(palabra+"\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
                     return "\n\t\t\t^Error 008: SALTO RELATIVO MUY LEJANO";
                 }
             }

@@ -42,7 +42,7 @@ public class metodosDeLectura {
         //Variable que ayuda a llevar el conteo de líneas que ocupan memoria 
         int numPalabra=0, inicio = 0, org=0;
         numMemoria = 0;
-        String error = "", memHexa ="", memHexaAux = "", inicioHexa= "";
+        String error = "", memHexa ="", memHexaAux = "", inicioHexa= "", mensaje = "";
         boolean end=false, wrong=false;
         
         /*Se crean varios archivos dentro de la carpeta del proyecto, cada archivo guarda una lista de las
@@ -202,7 +202,12 @@ public class metodosDeLectura {
                             end=true;
                             error=line;
                         }else{
-                            System.out.println(line+"\n\t\t\t^Error: Sintaxis incorrecta");
+                            mensaje = line + "\u001B[31m\n\t\t\t^Error: Sintaxis incorrecta.\u001B[0m\n";
+                            //Guardamos la salida de la primer pasada
+                            Output outPut = new Output();
+                            outPut.mensaje = mensaje;
+                            metodosDeLectura.salidas.add(outPut);
+                            
                         }
                         //No imprimimos la memoria
                         memHexaAux = "  ";
@@ -226,14 +231,22 @@ public class metodosDeLectura {
                         if(EsInstruccion(auxPalabra, m)!=0){
                         //Error 009
                         //Pero debe revisar todos los archivos para corroborar que la primera "palabra" sea una instrucción,
-                        //Si no la encuentra entonces es una ETIQUETA     
-                        System.out.println("\u001B[31m Error 09: INSTRUCCIÓN CARECE DE AL MENOS UN ESPACIO RELATIVO AL MARGEN");
+                        //Si no la encuentra entonces es una ETIQUETA
+                         mensaje = line + "\u001B[31m\n\t\t\t^Error 09: INSTRUCCIÓN CARECE DE AL MENOS UN ESPACIO RELATIVO AL MARGEN\u001B[0m\n";
+                         //Guardamos la salida de la primer pasada
+                         Output outPut = new Output();
+                         outPut.mensaje = mensaje;
+                         metodosDeLectura.salidas.add(outPut);
+                            
+                        
                         error = line+"\n\t\t\t^Error 09: INSTRUCCIÓN CARECE DE AL MENOS UN ESPACIO RELATIVO AL MARGEN"; 
                         }else{
                             error = VCE.agregarEtiqueta(palabra, numMemoria + inicio);
                             if(!variables.contains(palabra)){
                                 Integer intAux = numMemoria + inicio;
-                                variables.put(palabra, intAux.toHexString(inicio).toUpperCase());
+                                variables.put(palabra, Integer.toHexString(intAux).toUpperCase());
+                                System.out.println("--Lista var:");
+                                System.out.println(variables);
                             }
                             
                             //System.out.println(VCE.Etiquetas);
@@ -259,7 +272,11 @@ public class metodosDeLectura {
             
             if(!end){
                 
-                System.out.println("\u001B[31m Error 010: NO SE ENCUENTRA END\u001B[0m");
+                mensaje = "\u001B[31m\n\t\t\t^Error 010: NO SE ENCUENTRA END\u001B[0m\n";
+                //Guardamos la salida de la primer pasada
+                Output outPut = new Output();
+                outPut.mensaje = mensaje;
+                metodosDeLectura.salidas.add(outPut);
                 error="\n\t\t\t^Error 010: NO SE ENCUENTRA END";
                 
                 try {
@@ -423,7 +440,7 @@ public class metodosDeLectura {
                             break;
                         }else if((aux.contains("ORG")||aux.contains("org"))&&noWord==1&&word.length()%2==0){
                             //System.out.println("word: "+word);
-                            s19=s19.concat(word);
+                            //s19=s19.concat(word);
                             //System.out.println("Nuevo s19:"+s19);
                             break;
                         }else if(aux.contains("END")||aux.contains("end")){
@@ -634,21 +651,38 @@ public class metodosDeLectura {
                     }
                     //Envia a la funcion para guardar en la HashTable, y revisar que no contenga
                     //otra constante o variable con el mismo nombre
-                    GuardarVariablesH(clave,valor);
-                    System.out.println("\033[0;1m"+valor+"          "+"\u001B[0m"+line);
-                    
+                    boolean error = GuardarVariablesH(clave,valor,variables);
+                    if (error){
+                        String mensaje = line + "\u001B[31m\n\t\t\t^Error: Variable o constante repetida.\u001B[0m\n";
+                        //Guardamos la salida de la primer pasada
+                        Output outPut = new Output();
+                        outPut.mensaje = mensaje;
+                        metodosDeLectura.salidas.add(outPut);
+                        return line + "\n\t\t\t^Error: Variable o constante repetida.";
+                    }else{
+                        String mensaje = "\033[0;1m"+valor+"          "+"\u001B[0m"+line;
+                        //Guardamos la salida de la primer pasada
+                        Output outPut = new Output();
+                        outPut.mensaje = mensaje;
+                        metodosDeLectura.salidas.add(outPut); 
+                    }
                 return valor+"          "+line;
-                    
 }
-    public Hashtable<String,String> GuardarVariablesH(String clave, String valor){
-
+    
+    public boolean GuardarVariablesH(String clave, String valor, Hashtable <String,String> variables){
+        
+        
         if(variables.containsKey(clave)){
-            variables.replace(clave, valor);
+           
+            return true;
+            
         }else{
             variables.put(clave,valor);
+            System.out.println("---Tabla var");
+            System.out.println(variables);
         }
        
-        return variables;
+        return false;
         
     }
     

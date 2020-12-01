@@ -100,7 +100,7 @@ public class Relativo {
                     //System.out.println(palabra);
                     if(palabra.startsWith("*")){
                         //Lo demás es un comentario así que no tiene operandos
-                        System.out.println("\u001B[31m Error 005: INSTRUCCIÓN CARECE DE  OPERANDO(S) \u001B[0m");
+                        System.out.println(newLine+"\n\t\t\t^ \u001B[31m Error 005: INSTRUCCIÓN CARECE DE  OPERANDO(S) \u001B[0m");
                         return newLine + "\n\t\t\t^Error 005: INSTRUCCIÓN CARECE DE  OPERANDO(S)";
                     }
                     //Nos ayuda a identificar si hay un error en la etiqueta
@@ -119,12 +119,12 @@ public class Relativo {
                     return newLine;
                     
                 }else{
-                    System.out.println("\u001B[31m Error: Sintaxis incorrecta \u001B[0m");
+                    System.out.println(linea+"\n\t\t\t^\u001B[31m Error: Sintaxis incorrecta \u001B[0m");
                     return linea + "\n\t\t\t^Error: Sintaxis incorrecta";
                 }                        
             }
             if (numPalabra<2){
-                System.out.println("\u001B[31m Error 005: INSTRUCCIÓN CARECE DE  OPERANDO(S) \u001B[0m");
+                System.out.println(newLine+"\n\t\t\t^\u001B[31m Error 005: INSTRUCCIÓN CARECE DE  OPERANDO(S) \u001B[0m");
                 return newLine + "\n\t\t\t^Error 005: INSTRUCCIÓN CARECE DE  OPERANDO(S)";
             }
         }
@@ -143,7 +143,7 @@ public class Relativo {
         //System.out.println("pos: " + pos);
         if (pos == 0){
             error = true;
-            System.out.println("\u001B[31m Error 003: ETIQUETA INEXISTENTE \u001B[0m");
+            System.out.println(palabra+"\n\t\t\t^\u001B[31m Error 003: ETIQUETA INEXISTENTE \u001B[0m");
             return "\n\t\t\t^Error 003: ETIQUETA INEXISTENTE";
         }else{
             
@@ -204,7 +204,7 @@ public class Relativo {
                               
                 }else{
                     error = true;
-                    System.out.println("\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
+                    System.out.println(palabra+"\n\t\t\t^\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
                     return "\n\t\t\t^Error 008: SALTO RELATIVO MUY LEJANO";
                 }
             }else{
@@ -219,10 +219,13 @@ public class Relativo {
                     if(hexadecimal.length()==1){
                         hexadecimal = "0" + hexadecimal;
                     }
+                    if (hexadecimal.length()>2){
+                        hexadecimal = hexadecimal.substring(hexadecimal.length()-2);
+                    }
                     return hexadecimal;
                 }else{
                     error = true;
-                    System.out.println("\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
+                    System.out.println(palabra+"\n\t\t\t^\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
                     return "\n\t\t\t^Error 008: SALTO RELATIVO MUY LEJANO";
                 }
             }
