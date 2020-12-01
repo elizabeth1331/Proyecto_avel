@@ -25,7 +25,7 @@ public class GestionDoc {
             System.out.print( archivo.getAbsolutePath());
             if(archivo.exists()){
                f = archivo.getAbsolutePath();
-              System.out.print( "\nDireccion absoluta del archivo ---"+f+ " \n");
+              //System.out.print( "\nDireccion absoluta del archivo ---"+f+ " \n");
                op.Lectura(f);
 
             }else{

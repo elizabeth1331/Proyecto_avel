@@ -25,7 +25,6 @@ public class IndexadoX {
         
     
     public String revisarLineaX(String line, Mnemonicos m, Hashtable<String,String> variables, int numMemoria){
-        
     
         IndexadoX=m.LeerOpcode("ListaIndexadoX.txt");
         BytesIndexadoX=m.LeerBytes("ListaIndexadoX.txt");

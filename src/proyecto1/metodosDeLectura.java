@@ -245,8 +245,8 @@ public class metodosDeLectura {
                             if(!variables.contains(palabra)){
                                 Integer intAux = numMemoria + inicio;
                                 variables.put(palabra, Integer.toHexString(intAux).toUpperCase());
-                                System.out.println("--Lista var:");
-                                System.out.println(variables);
+                                //System.out.println("--Lista var:");
+                                //System.out.println(variables);
                             }
                             
                             //System.out.println(VCE.Etiquetas);
@@ -335,7 +335,7 @@ public class metodosDeLectura {
                         line = file.nextLine();
                     }*/
                     line = file.nextLine();
-                    System.out.println(line);
+                    //System.out.println(line);
                     StringTokenizer st = new StringTokenizer(line);
                     if(st.hasMoreTokens())
                         primerPalabra = st.nextToken();
@@ -359,7 +359,7 @@ public class metodosDeLectura {
                     if(ultimoSalto!=0){
                         if(ultimoSalto < numLinea){
                             segunda.add(line);
-                            System.out.println("------Se agrega: "+ line);
+                            //System.out.println("------Se agrega: "+ line);
                         }
                     }else{
                         segunda.add(line);
@@ -377,11 +377,11 @@ public class metodosDeLectura {
             }
             lineaSalto = 0;
             
-            System.out.println("-------LISTA DE 2da pasada--------");
-            System.out.println("tamaño: " + salidas.size());
+            //System.out.println("-------LISTA DE 2da pasada--------");
+            //System.out.println("tamaño: " + salidas.size());
             
             for(int k = 0; k<segunda.size();k++){
-                System.out.println(segunda.get(k));
+                //System.out.println(segunda.get(k));
                 
             }
         }
@@ -464,7 +464,7 @@ public class metodosDeLectura {
             int l=s19.length();
             
             //System.out.println("Memoria inicial="+mem);
-            System.out.println("s19 es: "+s19);
+            //System.out.println("s19 es: "+s19);
             //System.out.println("Longitud de s19:"+s19.length());
             
             try {
@@ -485,7 +485,7 @@ public class metodosDeLectura {
                     out.write("\n");
                     ini=ini+10;
                     mem=ini.toString();
-                    System.out.println("New mem:"+mem);
+                    //System.out.println("New mem:"+mem);
                 }
                 out.close();
             } catch (IOException ex) {
@@ -678,8 +678,8 @@ public class metodosDeLectura {
             
         }else{
             variables.put(clave,valor);
-            System.out.println("---Tabla var");
-            System.out.println(variables);
+            //System.out.println("---Tabla var");
+            //System.out.println(variables);
         }
        
         return false;

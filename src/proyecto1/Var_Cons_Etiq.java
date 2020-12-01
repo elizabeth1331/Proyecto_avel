@@ -18,7 +18,7 @@ public class Var_Cons_Etiq {
     public Var_Cons_Etiq(){
         this.Etiquetas = new Hashtable();
     }
-    
+            
     /**
      * Guarda una etiqueta y su posición
      * @param etiqueta Es la etiqueta a guardar

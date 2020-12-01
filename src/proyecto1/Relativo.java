@@ -209,7 +209,7 @@ public class Relativo {
                 }
             }else{
                 //Caso de salto positivo
-                System.out.println("El salto es positivo");
+                //System.out.println("El salto es positivo");
                 salto = pos - (numMem+2);
                 if (salto <= 128){
                     error = false;
