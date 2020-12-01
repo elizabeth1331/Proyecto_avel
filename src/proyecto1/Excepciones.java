@@ -395,7 +395,7 @@ public class Excepciones {
                                 
                                
                                     if(palabraNueva.contains("#")){
-                                        mensaje = "\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo. \u001B[0m\n";
+                                        mensaje = line+"\n\t\t\t^\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo. \u001B[0m\n";
                                         //Guardamos la salida de la primer pasada
                                         Output outPut = new Output(mensaje);
                                         metodosDeLectura.salidas.add(outPut);
@@ -488,7 +488,7 @@ public class Excepciones {
                                             newLine2=newLine2.concat(op); //Operando
                                         }
                                     }else{
-                                            mensaje = "\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
+                                            mensaje = "\n\t\t\t^\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
                                             //Guardamos la salida de la primer pasada
                                             Output outPut = new Output(mensaje);
                                             metodosDeLectura.salidas.add(outPut);
@@ -781,7 +781,7 @@ public class Excepciones {
         pos = VCE.buscarEtiqueta(palabra);
         if (pos == 0){
             error = true;
-            System.out.println(palabra +"\u001B[31m Error 003: ETIQUETA INEXISTENTE \u001B[0m");
+            System.out.println(palabra +"\n\t\t\t^\u001B[31m Error 003: ETIQUETA INEXISTENTE \u001B[0m");
             return "\n\t\t\t^Error 003: ETIQUETA INEXISTENTE";
         }else{
             
@@ -840,7 +840,7 @@ public class Excepciones {
                               
                 }else{
                     error = true;
-                    System.out.println(palabra+"\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
+                    System.out.println(palabra+"\n\t\t\t^\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
                     return "\n\t\t\t^Error 008: SALTO RELATIVO MUY LEJANO";
                 }
             }else{
@@ -857,7 +857,7 @@ public class Excepciones {
                     return hexadecimal;
                 }else{
                     error = true;
-                    System.out.println(palabra+"\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
+                    System.out.println(palabra+"\n\t\t\t^\u001B[31m Error 008: SALTO RELATIVO MUY LEJANO \u001B[0m");
                     return "\n\t\t\t^Error 008: SALTO RELATIVO MUY LEJANO";
                 }
             }

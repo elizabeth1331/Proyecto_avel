@@ -105,7 +105,7 @@ public class Relativo {
                         metodosDeLectura.salidas.get(numLinea-1).salto = false;
                        
                     }else{
-                        System.out.print("\n\033[46;34m"+Relativo.get(instruccion)+"\u001B[44;36m"+newLine+"\u001B[0m"+"\t\t\t"+linea+"\n");
+                        System.out.println("\n\033[46;34m"+Relativo.get(instruccion)+"\u001B[44;36m"+newLine+"\u001B[0m"+"\t\t\t"+linea+"\n");
                         newLine = inicio+Relativo.get(instruccion)+newLine+"\t\t\t"+linea;
                     }
                 }else if((numPalabra==3)&&(palabra.startsWith("*"))){

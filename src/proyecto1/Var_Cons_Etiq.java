@@ -33,7 +33,7 @@ public class Var_Cons_Etiq {
            outPut.mensaje = salida;
            metodosDeLectura.salidas.add(outPut);
            
-           return etiqueta + "\n\t\t\t^Error: Esta etiqueta está duplicada";
+           return etiqueta+"\n\t\t\t^Error: Esta etiqueta está duplicada";
        }
        Etiquetas.put(etiqueta, pos);
        return "";

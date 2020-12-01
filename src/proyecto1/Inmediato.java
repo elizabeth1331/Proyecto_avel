@@ -142,7 +142,7 @@ public class Inmediato {
                         //El operando es una constante porque tenía #
                         op=variables.get(palabra);
                     }else if(((!variables.containsKey(palabra))&&(!hex))&&(!esNumero(palabra))&&(!cha)){
-                        String mensaje = "\u001B[31m Error 001: CONSTANTE INEXTISTENTE\u001B[0m\n";
+                        String mensaje = line+"\n\t\t\t^\u001B[31m Error 001: CONSTANTE INEXTISTENTE\u001B[0m\n";
                         //Guardamos la salida de la primer pasada
                         Output outPut = new Output();
                         outPut.mensaje = mensaje;
