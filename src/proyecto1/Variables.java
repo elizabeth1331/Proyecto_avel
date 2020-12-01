@@ -21,20 +21,6 @@ public class Variables {
         System.out.print("   jkjhdgjkh"+ clave +"---"+ valor+"\n ");
         variables.put(clave,valor);        
         return variables;
-        
-        /*
-        
-        st = new StringTokenizer (line);
-                        //Leemos la ínea hasta encontrar el primer espacio
-                        palabra = st.nextToken();
-        
-        
-        
-        if (variables.containsKey(palabra)){
-               //instruccion=instruccion.concat(palabra);
-               //newLine=newLine.concat(variables.get(palabra));
-               System.out.println(palabra +" No es palabra repetida");
-                                    }*/
     }
     
     
@@ -71,24 +57,6 @@ public class Variables {
                             }
                              aux = String.valueOf(auxP);
                              valor=Integer.parseInt(aux);
-
-/*
-                             //En caso de que sea un operando en número hexadecimal
-                            if(palabra.startsWith("$")){
-                                System.out.println(palabra+" Es variable hexadecimal");
-                                valor=Integer.parseInt(palabra);
-                                //newLine=newLine.concat(aux);
-
-                            //En caso de que sea un caracter
-                            }else if(palabra.startsWith("#'")){
-                                //System.out.println(palabra+" Es operando ASCII");
-                                //Se utiliza la cadena aux para separar #' del operando
-                                aux=aux.concat(palabra.substring(2));
-                                //System.out.println(aux+" Es el caracter");
-                                //Se comprueba si el operando es un solo caracter
-
-                            //En caso de que sea un operando en número decimal
-                            }*/
                         }
                     }
                             //Envia a la funcion para guardar en la HashTable, y revisar que no contenga
@@ -97,5 +65,4 @@ public class Variables {
                  return variables;
                     
 }
-    
 }

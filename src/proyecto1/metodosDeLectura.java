@@ -3,9 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-//C:\Users\81664\Desktop\Proyecto 2.0\Proyecto
-//C:\Users\81664\Desktop\Proyecto 2.0\Proyecto\prueba_salto.txt
 package proyecto1;
 
 import java.io.BufferedWriter;
@@ -79,9 +76,7 @@ public class metodosDeLectura {
             while (file.hasNextLine()&&end==false) {
                 num++;
                 line = file.nextLine();
-                //System.out.println("*****LIRIO******La memoria es:"+numMemoria);
                 
-                //System.out.println(line); // Palabra que lee
                 if(line.startsWith("*")){
                      //No imprimimos la memoria
                        memHexaAux = " ";
@@ -93,11 +88,8 @@ public class metodosDeLectura {
                         error = GuardarVariables(line, variables);
                 }else if(line.startsWith("\t")||line.startsWith(" ")){
                     String lineAux=line;
-                    while(lineAux.startsWith(" ")){
+                    while(lineAux.startsWith(" ")||lineAux.startsWith("\t")){
                             lineAux=lineAux.substring(1);
-                    }
-                    while(lineAux.startsWith("\t")){
-                            lineAux=lineAux.replace("\t","");
                     }
                     if(lineAux.startsWith("*")){
                      //No imprimimos la memoria
@@ -125,7 +117,7 @@ public class metodosDeLectura {
                                 numP--;
                                 break;
                             }else if(palabra.startsWith("$")){
-                                org=Integer.parseInt(palabra.substring(1));
+                                org=Integer.parseInt(palabra.substring(1),16);
                                 inicio = Integer.parseInt(palabra.substring(1),16);
                                 memHexa = Integer.toHexString(inicio).toUpperCase();
                             }else{
@@ -157,16 +149,13 @@ public class metodosDeLectura {
                         error="";
                         while(st.hasMoreTokens()){
                             palabra = st.nextToken();
-                            //System.out.println("Palabra a analizar:"+palabra);
                             if(palabra.startsWith("*")){
                                 bien=true;
                                 break;
                             }else if(palabra.startsWith("$")){
                                 palabra = palabra.substring(1);
-                                //System.out.println("Palabra substring(1):"+palabra);
                                 error = error + palabra;
                                 numB=numB+1;
-                                //System.out.println("numB al momento de "+lineAux+" es: "+numB);
                                 bien=true;
                             }else{
                                 bien=false;
@@ -185,7 +174,6 @@ public class metodosDeLectura {
                             //Se concatena la original porque la auxiliar no tiene la instruccion fcb
                             
                             error=error+line;
-                            //System.out.println("Esta es la que se imprime ¿no?"+error);
                             //Se debe calcular la dirección porque tiene operandos
                             numMemoria = numMemoria + numB;
                             memHexaAux=Integer.toHexString(inicio+numMemoria).toUpperCase();
@@ -195,7 +183,7 @@ public class metodosDeLectura {
                             lineAux=lineAux.replace("END","");
                         if(lineAux.contains("end"))
                             lineAux=lineAux.replace("end","");
-                        while(lineAux.startsWith(" ")){
+                        while(lineAux.startsWith(" ")||lineAux.startsWith("\t")){
                             lineAux=lineAux.substring(1);
                         }
                         if(lineAux.startsWith("*")||lineAux.equals("")){
@@ -207,7 +195,6 @@ public class metodosDeLectura {
                             Output outPut = new Output();
                             outPut.mensaje = mensaje;
                             metodosDeLectura.salidas.add(outPut);
-                            
                         }
                         //No imprimimos la memoria
                         memHexaAux = "  ";
@@ -245,11 +232,7 @@ public class metodosDeLectura {
                             if(!variables.contains(palabra)){
                                 Integer intAux = numMemoria + inicio;
                                 variables.put(palabra, Integer.toHexString(intAux).toUpperCase());
-                                System.out.println("--Lista var:");
-                                System.out.println(variables);
                             }
-                            
-                            //System.out.println(VCE.Etiquetas);
                         }
                     
                 }else if(line.equals("")){
@@ -257,7 +240,6 @@ public class metodosDeLectura {
                 }
                 if(error.contains("^")){
                     wrong=true;
-                    //System.out.println("EN ESTE MOMENTO WRONG CAMBIO A TRUE CON+"+error);
                 }
                 try {
                     FileWriter fstream = new FileWriter("Archivo.txt", true);
@@ -307,8 +289,6 @@ public class metodosDeLectura {
         int numsalto =0;
         
         while (!salidas.isEmpty()){ //Se va vaciando la lista de mensajes
-            //numsalto ++;
-            //System.out.println("El salto es: " + numsalto);
             saltoAnterior = segunda.size();           
             while(lineaSalto==0&&!salidas.isEmpty()){
                 //Sacamos un elemento de la lista hasta que alguno corresponda a una línea con salto
@@ -329,13 +309,8 @@ public class metodosDeLectura {
                  se irán transcribiendo las líneas que no tienen salto e iremos eliminando las líneas leidas. 
                 */
                 while (file.hasNextLine()&& numLinea != lineaSalto){ 
-                    //System.out.println("Escribiendo archivo LST");
                     
-                    /*for(int i = 0; i<=numLinea; i++){
-                        line = file.nextLine();
-                    }*/
                     line = file.nextLine();
-                    System.out.println(line);
                     StringTokenizer st = new StringTokenizer(line);
                     if(st.hasMoreTokens())
                         primerPalabra = st.nextToken();
@@ -343,7 +318,6 @@ public class metodosDeLectura {
                     /*Se obtiene el número de la línea que se está leyendo para saber si corresponde o no a un salto*/
                     if (!primerPalabra.startsWith("^")&&st.countTokens()>2)
                         numLinea = Integer.parseInt(primerPalabra);
-                    //System.out.println("numLinea = " + numLinea);
                     if (numLinea == lineaSalto){
                         if(excepcion){
                             Excepciones EXC=new Excepciones();
@@ -359,16 +333,12 @@ public class metodosDeLectura {
                     if(ultimoSalto!=0){
                         if(ultimoSalto < numLinea){
                             segunda.add(line);
-                            System.out.println("------Se agrega: "+ line);
                         }
                     }else{
                         segunda.add(line);
                     }
-                    
-                    
-                        
-                    
                 }
+                
                 ultimoSalto = segunda.size();
                 file.close();
                 
@@ -377,11 +347,7 @@ public class metodosDeLectura {
             }
             lineaSalto = 0;
             
-            System.out.println("-------LISTA DE 2da pasada--------");
-            System.out.println("tamaño: " + salidas.size());
-            
             for(int k = 0; k<segunda.size();k++){
-                System.out.println(segunda.get(k));
                 
             }
         }
@@ -398,9 +364,7 @@ public class metodosDeLectura {
                 System.out.println("Error: "+ex.getMessage());
             }  
         }
-        //System.out.println("**********************El valor de wrong es:"+wrong);
         if(wrong==false){
-            //System.out.println("***************************No hay errores, se genera el S19");
             // Generar el S19
             Integer noLinea = 0;
             String lineaNueva = "",aux="";
@@ -424,32 +388,23 @@ public class metodosDeLectura {
                         aux=aux.replace("fcb","");
                     }
                     int noWord=0;
-                    //System.out.println("Linea hasta el momento:"+aux);
                     StringTokenizer st = new StringTokenizer (aux);
-                    //s19="";
                     while(st.hasMoreTokens()){
                         String word=st.nextToken();
                         noWord++;
                         if((aux.contains("EQU")||aux.contains("equ"))&&noWord==1&&word.length()%2==0){
-                            //System.out.println("word: "+word);
                             s19=s19.concat(word);
-                            //System.out.println("Nuevo s19:"+s19);
                             break;
                         }else if(aux.equals("")){
                             //no se hace nada porque es un salto de línea
                             break;
                         }else if((aux.contains("ORG")||aux.contains("org"))&&noWord==1&&word.length()%2==0){
-                            //System.out.println("word: "+word);
-                            //s19=s19.concat(word);
-                            //System.out.println("Nuevo s19:"+s19);
                             break;
                         }else if(aux.contains("END")||aux.contains("end")){
                             //no se agrega nada
                             break;
                         }else if(noWord==2&&word.length()%2==0){
-                            //System.out.println("word: "+word);
                             s19=s19.concat(word);
-                            //System.out.println("Nuevo s19:"+s19);
                             break;
                         }
                     }
@@ -462,10 +417,6 @@ public class metodosDeLectura {
             Integer ini=org;
             String mem = ini.toString();
             int l=s19.length();
-            
-            //System.out.println("Memoria inicial="+mem);
-            System.out.println("s19 es: "+s19);
-            //System.out.println("Longitud de s19:"+s19.length());
             
             try {
                 FileWriter fstream = new FileWriter(LST+"S19",true);
@@ -485,7 +436,6 @@ public class metodosDeLectura {
                     out.write("\n");
                     ini=ini+10;
                     mem=ini.toString();
-                    System.out.println("New mem:"+mem);
                 }
                 out.close();
             } catch (IOException ex) {
@@ -515,10 +465,6 @@ public class metodosDeLectura {
             /*Si la linea contiene alguna de las 4 excepciones, va la clase de excepciones para verificar si 
             es una excepcion o tratarla como un mnemonico comun.*/
             newLine=EXC.analizarLinea(line, m, VCE, variables, numMemoria, 1, numLinea, inicio);
-            //Si se regresa un error al analizar la línea, se devuelve la cadena con el error
-            //f(newLine.contains("No es mnemonico excepcional") || newLine.contains("ERROR")){
-            //return newLine;
-            //}
         }else if(line.contains(",")){
             
             if(line.contains(",X")||line.contains(",x")){
@@ -561,19 +507,19 @@ public class metodosDeLectura {
             op=EsInstruccion(palabra,m);
             switch (op){
                 case 0:
-                    System.out.println("\u001B[31m Error 004: MNEMÓNICO INEXISTENTE\u001B[0m");
+                    String mensaje=line+"\n\t\t\t^\u001B[31m Error 004: MNEMÓNICO INEXISTENTE\u001B[0m";
+                    Output outPut = new Output();
+                    outPut.mensaje = mensaje;
+                    metodosDeLectura.salidas.add(outPut);
                     newLine=line+"\n\t\t\t^Error 004: MNEMÓNICO INEXISTENTE";
                     break;
                 case 1:
-                    //System.out.println(palabra+" Es instrucción del modo inmediato, directo o extendido");
                     newLine=IMM.AnalizarLinea(line, m, variables, numMemoria);
                     break;
                 case 2:
-                    //System.out.println(palabra+" Es unstrucción del modo inherente");
                     newLine=INH.AnalizarLinea(line, m, numMemoria);
                     break;
                 case 3:
-                    //System.out.println(palabra+" Es instrucción del modo relativo");
                     newLine=REL.RevisarLinea(line, m, VCE, numMemoria, 1, numLinea, inicio);
                     break;
                 }
@@ -643,7 +589,10 @@ public class metodosDeLectura {
                             if(Saux.length()==2||Saux.length()==4){
                                valor=Saux; 
                             }else{
-                                System.out.println("\u001B[31m Error: LONGITUD DE VARIABLE INCORRECTA\u001B[0m");
+                                String mensaje=line+"\n\t\t\t^\u001B[31m Error: LONGITUD DE VARIABLE INCORRECTA\u001B[0m";
+                                Output outPut = new Output();
+                                outPut.mensaje = mensaje;
+                                metodosDeLectura.salidas.add(outPut);
                                 return line+"\n\t\t\t^Error: LONGITUD DE VARIABLE INCORRECTA";
                             }
                            
@@ -660,7 +609,7 @@ public class metodosDeLectura {
                         metodosDeLectura.salidas.add(outPut);
                         return line + "\n\t\t\t^Error: Variable o constante repetida.";
                     }else{
-                        String mensaje = "\033[0;1m"+valor+"          "+"\u001B[0m"+line;
+                        String mensaje = "\033[0;1m"+valor+"          "+"\u001B[0m"+line+"\n";
                         //Guardamos la salida de la primer pasada
                         Output outPut = new Output();
                         outPut.mensaje = mensaje;
@@ -671,15 +620,12 @@ public class metodosDeLectura {
     
     public boolean GuardarVariablesH(String clave, String valor, Hashtable <String,String> variables){
         
-        
         if(variables.containsKey(clave)){
            
             return true;
             
         }else{
             variables.put(clave,valor);
-            System.out.println("---Tabla var");
-            System.out.println(variables);
         }
        
         return false;
@@ -694,5 +640,4 @@ public class metodosDeLectura {
             return false;
         }
     }
-
 }

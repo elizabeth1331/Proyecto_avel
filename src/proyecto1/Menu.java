@@ -117,7 +117,7 @@ metodosDeLectura lectura = new metodosDeLectura();
 
         Texto2.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
         Texto2.setForeground(new java.awt.Color(255, 255, 255));
-        Texto2.setText("Ingresa la ruta comprenta del archivo a ejecutar");
+        Texto2.setText("Ingresa la ruta completa del archivo a ejecutar:");
         getContentPane().add(Texto2);
         Texto2.setBounds(20, 200, 1010, 100);
 
@@ -156,7 +156,7 @@ metodosDeLectura lectura = new metodosDeLectura();
     
         try {
 
-            File objetofile = new File ("Resúmenes.pdf");
+            File objetofile = new File ("Reporte.pdf");
             Desktop.getDesktop().open(objetofile);
 
         }catch (IOException ex) {

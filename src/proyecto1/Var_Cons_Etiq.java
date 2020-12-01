@@ -18,7 +18,7 @@ public class Var_Cons_Etiq {
     public Var_Cons_Etiq(){
         this.Etiquetas = new Hashtable();
     }
-    
+            
     /**
      * Guarda una etiqueta y su posición
      * @param etiqueta Es la etiqueta a guardar
@@ -33,7 +33,7 @@ public class Var_Cons_Etiq {
            outPut.mensaje = salida;
            metodosDeLectura.salidas.add(outPut);
            
-           return etiqueta + "\n\t\t\t^Error: Esta etiqueta está duplicada";
+           return etiqueta+"\n\t\t\t^Error: Esta etiqueta está duplicada";
        }
        Etiquetas.put(etiqueta, pos);
        return "";

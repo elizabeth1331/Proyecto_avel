@@ -25,7 +25,6 @@ public class IndexadoX {
         
     
     public String revisarLineaX(String line, Mnemonicos m, Hashtable<String,String> variables, int numMemoria){
-        
     
         IndexadoX=m.LeerOpcode("ListaIndexadoX.txt");
         BytesIndexadoX=m.LeerBytes("ListaIndexadoX.txt");
@@ -138,7 +137,6 @@ public class IndexadoX {
                                 cop=variables.get(recortarCS(palabra, 2));
                                
                                 //Se comprueba que la longitud del operando coincida con el necesario por la instrucción
-                                    //System.out.println("La instruccion es "+instruccion +" y su numero de bytes debe ser: "+BytesIndexadoY.get(instruccion));
 
                                    newLine=newLine.concat(cop);
 
@@ -214,7 +212,6 @@ public class IndexadoX {
                                 int opN=Integer.parseInt(recortarCS(palabra, 2));
                             //Se convierte el número decimal a hexadecimal y como cadena
                                 aux=Integer.toHexString(opN).toUpperCase();
-                                //System.out.println(aux+ " ---"+ newLine+" operanco en Hexadecimal");
                             //Concatena el valor con su opcode correspondiente
                                 newLine=newLine.concat(aux);
                             //Compara para ver si el numero de bytes coincide 

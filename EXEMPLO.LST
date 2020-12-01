@@ -1,0 +1,504 @@
+1 A  	**********************************
+2 A  	*PROGRAMA DE EJEMPLO
+3 A  	**********************************
+4 A  	1026          PACTL  EQU   $1026
+5 A  	1027          PACNT  EQU   $1027
+6 A  	1030          ADCTL  EQU   $1030
+7 A  	1031          ADR1   EQU   $1031
+8 A  	1032          ADR2   EQU   $1032
+9 A  	1033          ADR3   EQU   $1033
+10 A  	1034          ADR4   EQU   $1034
+11 A  	1039          OPTION EQU   $1039
+12 A  	
+13 A  	1000          PORTA  EQU   $1000
+14 A  	1008          PORTD  EQU   $1008
+15 A  	100A          PORTE  EQU   $100A
+16 A  	1002          PORTG  EQU   $1002
+17 A  	
+18 A  	1001          DDRA   EQU   $1001
+19 A  	1009          DDRD   EQU   $1009
+20 A  	1003          DDRG   EQU   $1003
+21 A  	
+22 A  	1024          TMSK2  EQU   $1024
+23 A  	1025          TFLG2  EQU   $1025
+24 A  	
+25 A  	102F          SCDR   EQU   $102F
+26 A  	102D          SCCR2  EQU   $102D
+27 A  	102E          SCSR   EQU   $102E
+28 A  	102C          SCCR1  EQU   $102C
+29 A  	102B          BAUD   EQU   $102B
+30 A  	103C          HPRIO  EQU   $103C
+31 A  	1028          SPCR   EQU   $1028
+32 A  	105D          CSCTL  EQU   $105D
+33 A  	1038          OPT2   EQU   $1038
+34 A  	
+35 A  	* VARIABLES *********************
+36 A  	
+37 A  	000C          ORDEN  EQU   $000C
+38 A  	000D          SEG    EQU   $000D
+39 A  	000E          U1     EQU   $000E
+40 A  	000F          U2     EQU   $000F
+41 A  	0010          U3     EQU   $0010
+42 A  	0011          U4     EQU   $0011
+43 A  	0012          U5     EQU   $0012
+44 A  	0013          V1     EQU   $0013
+45 A  	0014          V2     EQU   $0014
+46 A  	0015          BAS_H  EQU   $0015
+47 A  	0016          BAS_L  EQU   $0016
+48 A  	0017          V5     EQU   $0017
+49 A  	0018          TEMPO  EQU   $0018
+50 A  	0019          ALTO   EQU   $0019
+51 A  	001A          BAJO   EQU   $001A
+52 A  	001B          BASE_H EQU   $001B
+53 A  	001C          BASE_L EQU   $001C
+54 A  	001D          V3     EQU   $001D
+55 A  	001E          V4     EQU   $001E
+56 A  	
+57 A  	**********************************
+58 A  	*CONFIGURA REGISTROS
+59 A  	**********************************
+60 A  	8000	       ORG   $8000   * DIR DE INICIO
+61 A 8000	8E03FF			       LDS   #$03FF  * APUNTADOR DE STAK
+62 A 8000	
+63 A 8003	                         
+64 A 8003	8600			       LDAA  #$00    * CONFIG TODO EL PUERTO  A COMO ENTRADAS
+65 A 8005	B71001			       STAA  DDRA    * EL PUERTO A
+66 A 8008	                 
+67 A 8008	86FF			       LDAA  #$FF    * CONFIG TODO EL PUERTO  G COMO SALIDAS
+68 A 800A	B71003			       STAA  DDRG    * EL PUERTO G 
+69 A 800A	
+70 A 800D	8600			       LDAA  #$00    * SE PONE PUERTO G EN CEROS
+71 A 800F	B71002			       STAA  PORTG
+72 A 8012	                 
+73 A 8012	CC302C			       LDD   #$302C  * CONFIGURA PUERTO SERIAL
+74 A 8015	B7102B			       STAA  BAUD    * BAUD  9600  para cristal de 8MHz
+75 A 8018	F7102D			       STAB  SCCR2   * HABILITA  RX Y TX PERO INTERRUPCN SOLO RX
+76 A 801B	8600			       LDAA  #$00
+77 A 801D	B7102C			       STAA  SCCR1   * 8 BITS
+78 A 801D	
+79 A 8020	86FE			       LDAA  #$FE    * CONFIG PUERTO D COMO SALIDAS (EXCEPTO PD0)
+80 A 8022	B71009			       STAA  DDRD    * SEA  ENABLE DEL DISPLAY  PD4  Y RS PD3
+81 A 8025	                               
+82 A 8025	                
+83 A 8025	8604			       LDAA  #$04
+84 A 8027	B7103C			       STAA  HPRIO
+85 A 8027	
+86 A 802A	8600			       LDAA  #$00
+87 A 802C	06                 TAP
+88 A 802C	
+89 A 802C	
+90 A 802C	
+91 A 802D	                 
+92 A 802D	
+93 A 802D	
+94 A 802D	
+95 A  	**********************************
+96 A  	*PROGRAMA PRINCIPAL
+97 A  	**********************************
+98 A  	
+99 A 802D	       JSR   INICIA
+			^Error 002: VARIABLE INEXTISTENTE
+100 A 802D	863F			       LDAA  #$3F
+101 A 802F	B7000C			       STAA  ORDEN         * CARGO UN (?) en 000A
+102 A 802F	
+103 A 8032	                 
+104 A  	
+105 A 8032	86			       LDAA  SEG
+106 A 8032	27FE			BEQ CICLO 
+109 A 8037	86			       LDAA  PACNT
+110 A 8037	B70017			       STAA  V5
+111 A 803A	7F1027			       CLR   PACNT
+112 A 803A	
+113 A 803D	                 
+114 A 803D	       JSR   DATARX        * DESPLIEGA DATO TRANSMITIDO
+			^Error 002: VARIABLE INEXTISTENTE
+115 A 803D	1809                 DEY
+116 A 803F	188F                 XGDY 
+117 A 8041	B70019			       STAA  ALTO
+118 A 8044	F7001A			       STAB  BAJO
+119 A 8047	188F                 XGDY
+120 A 8049	86			       LDAA  ALTO
+121 A 8049	C6			       LDAB  BAJO
+122 A 8049	       JSR   BINBCD
+			^Error 002: VARIABLE INEXTISTENTE
+123 A 8049	       JSR   DISPLAY
+			^Error 002: VARIABLE INEXTISTENTE
+124 A 8049	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+125 A 8049	       JSR   VOLTA
+			^Error 002: VARIABLE INEXTISTENTE
+126 A 8049	                 
+127 A 8049	4F                 CLRA
+128 A 804A	C6			       LDAB  V1
+129 A 804A	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+130 A 804A	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+131 A 804A	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+132 A 804A	
+133 A 804A	4F                 CLRA
+134 A 804B	C6			       LDAB  V2
+135 A 804B	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+136 A 804B	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+137 A 804B	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+138 A 804B	
+139 A 804B	4F                 CLRA
+140 A 804C	C6			       LDAB  V3
+141 A 804C	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+142 A 804C	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+143 A 804C	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+144 A 804C	
+145 A 804C	4F                 CLRA
+146 A 804D	C6			       LDAB  V4
+147 A 804D	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+148 A 804D	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+149 A 804D	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+150 A 804D	           
+151 A 804D	4F                 CLRA
+152 A 804E	C6			       LDAB  V5
+153 A 804E	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+154 A 804E	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+155 A 804E	                 
+156 A 804E	       JSR   CRYTRN
+			^Error 002: VARIABLE INEXTISTENTE
+157 A 804E	              
+158 A 804E	7E8032			       JMP   CICLO
+159 A 804E	
+160 A 804E	
+161 A  	***********************************
+162 A  	* INICIA
+163 A  	***********************************
+164 A  	
+165 A 8051	               
+166 A 8051	7F000D			      CLR  SEG
+167 A 8051	
+168 A 8054	7F1002			      CLR  PORTG
+169 A 8057	86F4			      LDAA #$F4         
+170 A 8059	B70018			      STAA TEMPO         * TEMPO ES VARIABLE PARA CONTAR 244 CICLOS
+171 A 8059	
+172 A 805C	CE1024			      LDX #TMSK2
+173 A 805F	1C0040       BSET $00,X,#$40    * HABILITA INTERRUPCION TIMER T-REAL
+174 A 8062	0E                CLI
+175 A 8062	
+176 A 8063	CE1026			      LDX #PACTL
+177 A 8066	1C0050       BSET $00,X,#$50    * HABILITA PAEN -ACUMULADOR PULSOS ALTOS-
+178 A 8069	7F1027			      CLR PACNT          * BORRA ACUMULADOR DE PULSOS
+179 A 8069	
+180 A 806C	8610			      LDAA #$10
+181 A 806E	B7001B			      STAA BASE_H        * PONE UN #1060 COMO DIRECCION BASE INICIAL
+182 A 8071	8660			      LDAA #$60
+183 A 8073	B7001C			      STAA BASE_L    
+184 A 8076	                
+185 A 8076	18CE1060			      LDY  #$1060      
+186 A 807A	                
+187 A 807A	8616			      LDAA #$16
+188 A 807C	B70015			      STAA BAS_H        * PONE UN #1653 NUMERO TOTAL DE JUEGO DE MUESTRAS
+189 A 807F	8653			      LDAA #$53
+190 A 8081	B70016			      STAA BAS_L   
+191 A 8081	
+192 A 8081	
+193 A 8084	7F0019			      CLR  ALTO          * INICIA INDICE MUESTRA EN 0
+194 A 8087	7F001A			      CLR  BAJO
+195 A 8087	
+196 A 808A	39                 RTS
+197 A  	***********************************
+198 A  	* SACA
+199 A  	***********************************
+200 A  	
+201 A 808B	                      
+202 A 808B	                 
+203 A 808B	86			       LDAA  ALTO         * INDICE DE MUESTRA (SEGUNDO)
+204 A 808B	C6			       LDAB  BAJO
+205 A 808B	188F                 XGDY
+206 A 808D	1808                 INY
+207 A 808F	188F                 XGDY
+208 A 8091	       JSR   BINBCD
+			^Error 002: VARIABLE INEXTISTENTE
+209 A 8091	       JSR   DISPLAY
+			^Error 002: VARIABLE INEXTISTENTE
+210 A 8091	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+211 A 8091	           
+212 A 8091	86			       LDAA  BASE_H       * INDICE DE MUESTRA (PARTICULAR)
+213 A 8091	C6			       LDAB  BASE_L
+214 A 8091	188F                 XGDY
+215 A 8093	                 
+216 A 8093	1808                 INY
+217 A 8095	4F                 CLRA
+218 A 8096	18E600			       LDAB  $00,Y  
+219 A 8099	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+220 A 8099	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+221 A 8099	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+222 A 8099	
+223 A 8099	1808                 INY
+224 A 809B	4F                 CLRA
+225 A 809C	18E600			       LDAB  $00,Y
+226 A 809F	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+227 A 809F	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+228 A 809F	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+229 A 809F	
+230 A 809F	1808                 INY
+231 A 80A1	4F                 CLRA
+232 A 80A2	18E600			       LDAB  $00,Y
+233 A 80A5	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+234 A 80A5	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+235 A 80A5	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+236 A 80A5	
+237 A 80A5	1808                 INY
+238 A 80A7	4F                 CLRA
+239 A 80A8	18E600			       LDAB  $00,Y
+240 A 80AB	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+241 A 80AB	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+242 A 80AB	       JSR   COMA
+			^Error 002: VARIABLE INEXTISTENTE
+243 A 80AB	           
+244 A 80AB	1808                 INY
+245 A 80AD	4F                 CLRA 
+246 A 80AE	18E600			       LDAB  $00,Y
+247 A 80B1	       JSR   BNBCD
+			^Error 002: VARIABLE INEXTISTENTE
+248 A 80B1	       JSR   DSPLY
+			^Error 002: VARIABLE INEXTISTENTE
+249 A 80B1	                 
+250 A 80B1	188F                 XGDY
+251 A 80B3	B7001B			       STAA BASE_H
+252 A 80B6	F7001C			       STAB BASE_L
+253 A 80B6	
+254 A 80B9	       JSR   CRYTRN
+			^Error 002: VARIABLE INEXTISTENTE
+255 A 80B9	
+256 A 80B9	39                 RTS
+257 A  	***********************************
+258 A  	* COMA
+259 A  	***********************************
+260 A  	COMA
+			^Error 09: INSTRUCCIÓN CARECE DE AL MENOS UN ESPACIO RELATIVO AL MARGEN
+261 A 80BA	CE102E			       LDX   #SCSR 
+262 A 80BD	                 
+263 A 80BD	86			       LDAA  SCSR
+264 A 80BD	862C			       LDAA  #$2C             * COMA
+265 A 80BF	B7102F			       STAA  SCDR
+266 A  	
+267 A 80C2	1F0080FFFFFFFC			BRCLR $00,X,#$80 C1 
+307 A 80F1	86			       LDAA SCSR
+308 A 80F1	86			       LDAA  U5             * U5
+309 A 80F1	8B30			       ADDA  #$30
+310 A 80F3	B7102F			       STAA  SCDR
+311 A  	
+312 A 80F6	1F0080FFFFFFFC			BRCLR $00,X,#$80 T5 
+1 A  	**********************************
+312 A 80F6	1F0080 T5       BRCLR $00,X,#$80 T5  
+313 A 80FA	                 
+314 A 80FA	39                 RTS
+315 A 80FA	
+316 A  	***********************************
+317 A  	* CARRY RETURN
+318 A  	***********************************
+319 A  	
+320 A  	
+321 A 80FB	CE102E			       LDX   #SCSR 
+322 A 80FE	86			       LDAA  SCSR
+323 A 80FE	860A			       LDAA  #$0A             * NEW LINE     
+324 A 8100	B7102F			       STAA  SCDR
+325 A  	
+326 A 8103	1F0080FFFFFFFC			BRCLR $00,X,#$80 CR1 
+328 A 8107	86			       LDAA SCSR
+329 A 8107	860D			       LDAA #$0D              * CARRY RETURN     
+330 A 8109	B7102F			       STAA SCDR
+331 A  	
+332 A 810C	1F0080FFFFFFFC			BRCLR $00,X,#$80 CR2 
+334 A 8110	39                 RTS
+335 A  	***********************************
+336 A  	*  DESPLIEGUE DE DATO RECIBIDO
+337 A  	***********************************
+338 A  	
+339 A  	
+340 A 8111	CE102E			       LDX   #SCSR 
+341 A 8114	86			       LDAA  SCSR
+342 A 8114	86			       LDAA  ORDEN             * NEW LINE     
+343 A 8114	B7102F			       STAA  SCDR
+344 A  	
+345 A 8117	1F0080FFFFFFFC			BRCLR $00,X,#$80 DT1 
+1 A  	**********************************
+345 A 8117	1F0080 DT1       BRCLR $00,X,#$80 DT1        
+346 A 8117	
+347 A 811B	86			       LDAA SCSR 
+348 A 811B	863A			       LDAA #$3A              * DOS PUNTOS    
+349 A 811D	B7102F			       STAA SCDR
+350 A  	
+351 A 8120	1F0080FFFFFFFC			BRCLR $00,X,#$80 DT2 
+353 A 8124	39                 RTS
+354 A  	***********************************
+355 A  	* voltimetro
+356 A  	***********************************
+357 A  	
+358 A 8125	CE1030			      LDX #ADCTL      
+359 A 8125	
+360 A 8128	8680			      LDAA #$80
+361 A 812A	B71039			      STAA OPTION        * PONE EN MARCHA EL ADC
+362 A 812D	              
+363 A 812D	8610			      LDAA #$10
+364 A 812F	B71030			      STAA ADCTL         * ENTRADA MULTIPLE SELECCIONA CANAL 0
+365 A 812F	
+366 A  	
+367 A 8132	1F0080FFFFFFFC			BRCLR $00,X,#$80 E1 
+368 A 8136	C6			      LDAB ADR1
+369 A 8136	F70013			      STAB V1
+370 A 8139	                
+371 A 8139	8680			      LDAA #$80
+372 A 813B	B71039			      STAA OPTION        * PONE EN MARCHA EL ADC
+373 A 813E	              
+374 A 813E	8611			      LDAA #$11
+375 A 8140	B71030			      STAA ADCTL         * ENTRADA MULTIPLE SELECCIONA CANAL 1
+376 A 8140	
+377 A  	
+378 A 8143	1F0080FFFFFFFC			BRCLR $00,X,#$80 E2 
+379 A 8147	C6			      LDAB ADR2
+380 A 8147	F70014			      STAB V2
+381 A 814A	               
+382 A 814A	8612			      LDAA #$12
+383 A 814C	B71030			      STAA ADCTL         * ENTRADA MULTIPLE SELECCIONA CANAL 2
+384 A 814C	
+385 A  	
+386 A 814F	1F0080FFFFFFFC			BRCLR $00,X,#$80 E3 
+387 A 8153	C6			      LDAB ADR3
+388 A 8153	F7001D			      STAB V3 
+389 A 8153	
+390 A 8156	8613			      LDAA #$13
+391 A 8158	B71030			      STAA ADCTL         * ENTRADA MULTIPLE SELECCIONA CANAL 3
+392 A 8158	
+393 A  	
+394 A 815B	1F0080FFFFFFFC			BRCLR $00,X,#$80 E4 
+395 A 815F	C6			      LDAB ADR4
+396 A 815F	F7001E			      STAB V4
+397 A 815F	
+398 A 8162	                     
+399 A 8162	39                RTS
+400 A  	***********************************
+401 A  	* CONVIERTE A BCD
+402 A  	***********************************
+403 A  	
+404 A  	
+405 A 8163	               
+406 A 8163	CE2710			      LDX  #$2710
+407 A 8166	02                IDIV 
+408 A 8167	8F                XGDX
+409 A 8168	F7000E			      STAB U1
+410 A 816B	8F                XGDX
+411 A 816C	CE			      LDX  #$3E8
+412 A 816C	02                IDIV
+413 A 816D	8F                XGDX
+414 A 816E	F7000F			      STAB U2
+415 A 8171	8F                XGDX
+416 A 8171	
+417 A  	
+418 A 8172	CE			      LDX  #$64
+419 A 8172	02                IDIV
+420 A 8173	8F                XGDX
+421 A 8174	F70010			      STAB U3
+422 A 8177	8F                XGDX
+423 A 8178	CE			      LDX  #$A
+424 A 8178	02                IDIV
+425 A 8179	8F                XGDX
+426 A 817A	F70011			      STAB U4
+427 A 817D	8F                XGDX
+428 A 817E	F70012			      STAB U5
+429 A 817E	
+430 A 817E	
+431 A 817E	
+432 A 8181	39                RTS
+433 A 8181	
+434 A 8181	
+435 A 8181	
+436 A  	***********************************
+437 A  	* ATENCION A INTERRUPCION SERIAL
+438 A  	***********************************
+439 A  	F100	       ORG  $F100
+440 A F282	            
+441 A F282	36                 PSHA
+442 A F283	           
+443 A F283	86			       LDAA SCSR
+444 A F283	86			       LDAA SCDR
+445 A F283	B7000C			       STAA ORDEN
+446 A F283	
+447 A F286	32                 PULA  
+448 A F286	
+449 A F287	3B                 RTI
+450 A F287	
+451 A  	***********************************
+452 A  	* ATENCION A INTERRUPCION REAL TIME
+453 A  	***********************************
+454 A  	F110	      ORG  $F110
+455 A  	
+456 A F298	36                PSHA
+457 A F299	3C                PSHX
+458 A F299	
+459 A F29A	CE1025			      LDX #TFLG2
+460 A F29D	1C0040       BSET $00,X,#$40    * BORRA BANDERA INTERRUPCION
+461 A F2A0	7A0018			      DEC TEMPO
+462 A F2A3	2703			BEQ SEGUNDO 
+464 A F2A5	32                PULA
+465 A F2A6	38                PULX
+466 A F2A7	3B                RTI
+467 A F2A7	
+468 A  	
+469 A F2A8	86FF			      LDAA #$FF
+470 A F2AA	B7000D			      STAA SEG           * SEG ES UNA BANDERA DE SEGUNDO    
+471 A F2AD	86F4			      LDAA #$F4         
+472 A F2AF	B70018			      STAA TEMPO         * TEMPO ES VARIABLE PARA CONTAR 244 CICLOS
+473 A F2B2	7C1002			      INC  PORTG
+474 A F2B5	               
+475 A F2B5	32                PULA
+476 A F2B6	38                PULX
+477 A F2B7	3B                RTI
+478 A  	***********************************
+479 A  	* VECTOR INTERRUPCION SERIAL
+480 A  	***********************************
+481 A  	FFD6	       ORG   $FFD6
+482 A 10180	F100       FCB   $F1,$00       
+483 A 10180	
+484 A  	***********************************
+485 A  	* VECTOR INTERRUPCION REAL TIME
+486 A  	***********************************
+487 A  	FFF0	       ORG   $FFF0
+488 A 1019C	F110       FCB   $F1,$10       
+489 A 1019C	
+490 A  	***********************************
+491 A  	*RESET
+492 A  	***********************************
+493 A  	FFFE	       ORG    $FFFE
+494 A  	
+495 A  	***********************************
+496 A   	***********************************
+497 A   	
+498 A   	
+499 A   	
+500 A   	
+501 A   	
+502 A   	
+503 A  	
+
+			^Error 010: NO SE ENCUENTRA END

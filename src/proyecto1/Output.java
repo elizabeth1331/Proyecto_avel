@@ -43,6 +43,5 @@ public class Output {
     
     public int getLin(){
         return linea;
-    }
-    
+    }   
 }
