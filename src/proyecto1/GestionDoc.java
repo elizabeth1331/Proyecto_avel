@@ -25,7 +25,6 @@ public class GestionDoc {
             System.out.print( archivo.getAbsolutePath());
             if(archivo.exists()){
                f = archivo.getAbsolutePath();
-              //System.out.print( "\nDireccion absoluta del archivo ---"+f+ " \n");
                op.Lectura(f);
 
             }else{
@@ -65,10 +64,5 @@ public class GestionDoc {
             JOptionPane.showMessageDialog(null, "Error al guardar el contenido", "SAVE", JOptionPane.ERROR_MESSAGE);
         }
     return respuesta;
-}
-    
-    
-        
-
-    
+    }   
 }

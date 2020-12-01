@@ -59,7 +59,6 @@ public class IndexadoY {
                         
                         instruccion=instruccion.concat(palabra);
                         nl=newLine=newLine.concat(IndexadoY.get(palabra));
-                        //System.out.println(instruccion +" Es instruccion de Indexado en Y ");
                        
                     }else{
                         String mensaje = line+"\n\t\t\t^\u001B[31m Error 004: MNEMÓNICO INEXISTENTE\u001B[0m\n";
@@ -96,7 +95,6 @@ public class IndexadoY {
                         //Compara para ver si el numero de bytes coincide 
                                 if((newLine.length()%2 ==0 )&& (BytesIndexadoY.get(instruccion))==(Integer.parseInt(String.valueOf(newLine.length()/2)))){
                                 //Si coinciden, avisa que la longitud es correcta 
-                                   // System.out.println("El tamaño de bytes coincide con el Mnemonico");
                                     String mensaje = "\n\u001B[44;37m"+nl+"\u001B[0m";
                                     mensaje = mensaje + "\u001B[34m"+aux+"\u001B[0m"+"\t\t\t"+instruccion + " " + lc+"\n";
                                     //Guardamos la salida de la primer pasada
@@ -108,7 +106,6 @@ public class IndexadoY {
                                 //avisa que el tamaño es incorrecto y muestra el valor incorrecto 
                                    newLine=palabra;
                                    //Se comprueba que la longitud del operando coincida con el necesario por la instrucción
-                                    //System.out.println("-----La instruccion es "+instruccion +" y su numero de bytes a ocupar debe ser: "+BytesIndexadoX.get(instruccion));
                                     String mensaje = line+"\n\t\t\t^\u001B[31m Error 007: MAGNITUD DE  OPERANDO ERRONEA\u001B[0m\n";
                                     //Guardamos la salida de la primer pasada
                                         Output outPut = new Output();
@@ -136,7 +133,6 @@ public class IndexadoY {
                                 cop=variables.get(recortarCS(palabra, 2));
                                
                                 //Se comprueba que la longitud del operando coincida con el necesario por la instrucción
-                                    //System.out.println("La instruccion es "+instruccion +" y su numero de bytes debe ser: "+BytesIndexadoY.get(instruccion));
 
                                    newLine=newLine.concat(cop);
 
@@ -221,7 +217,6 @@ public class IndexadoY {
                                 //avisa que el tamaño es incorrecto y muestra el valor incorrecto 
                                    newLine=palabra;
                                 //Se comprueba que la longitud del operando coincida con el necesario por la instrucción
-                                //System.out.println("-----La instruccion es "+instruccion +" y su numero de bytes a ocupar debe ser: "+BytesIndexadoX.get(instruccion));
                                     String mensaje = line+"\n\t\t\t^\u001B[31m Error 007: MAGNITUD DE  OPERANDO ERRONEA\u001B[0m\n";
                                     //Guardamos la salida de la primer pasada
                                         Output outPut = new Output();

@@ -43,9 +43,6 @@ public class Inmediato {
         BytesDirecto=m.LeerBytes("ListaDirecto.txt");
         BytesExtendido=m.LeerBytes("ListaExtendido.txt");
         
-        //System.out.println(Inmediato);
-        //System.out.println(BytesInmediato);
-        
         //Palabra nos sirve para separar la linea en palabras y contabilizarlas
         String palabra;
         int numPalabra=0;
@@ -62,9 +59,6 @@ public class Inmediato {
             palabra = st.nextToken();
             numPalabra++;
             
-            //System.out.println(numPalabra);
-            //System.out.println("Palabra: "+palabra);
-            
             /*Se verifica que la primera palabra sea una instrucción del modo de direccionamiento inmediato, y de 
             ser así, se concatena al inicio de la cadena que se desea devolver*/
             if(numPalabra==1){
@@ -73,37 +67,20 @@ public class Inmediato {
                 if((Extendido.containsKey(palabra))&&!(Directo.containsKey(palabra))&&!(Inmediato.containsKey(palabra))){
                     instruccion=instruccion.concat(palabra);
                     newLine=newLine.concat(Extendido.get(palabra));
-                    //System.out.println(instruccion +" Es instruccion del modo de direccionamiento extendido");
-                    
-                   
-                    
                     d=1;
                 }else if((Directo.containsKey(palabra))&&!(Extendido.containsKey(palabra))&&!(Inmediato.containsKey(palabra))){
                     instruccion=instruccion.concat(palabra);
                     newLine=newLine.concat(Directo.get(palabra));
-                    //System.out.println(instruccion +" Es instruccion del modo de direccionamiento directo");
-                   
                     d=2;
                 }else if((Inmediato.containsKey(palabra))&&!(Directo.containsKey(palabra))&&!(Extendido.containsKey(palabra))){
                     instruccion=instruccion.concat(palabra);
                     newLine=newLine.concat(Inmediato.get(palabra));
-                    //System.out.println(instruccion +" Es instruccion del modo de direccionamiento inmediato");
-                    
-               
-                    
                     d=3;
                 }else{
                     instruccion=instruccion.concat(palabra);
                     newLine="";
-                    //System.out.println(instruccion +" Puede ser instruccion de los modos inmediato, directo o extendido");
                     d=0;
                 }
-                
-                /*else if (lectura.EsInstruccion(palabra,m)==0){
-                    //Instrucción de otro modo de direccionamiento con #
-                    System.out.println("\u001B[31m Error 000: ERROR DE SINTAXIS\u001B[0m");
-                    return "Error 000: ERROR DE SINTAXIS";
-                }*/
             }
             
             //Se verifica el operando, el cual corresponde a la segunda palabra de la línea
@@ -117,43 +94,34 @@ public class Inmediato {
                 
                 //Si es numérica pero no hexadecimal, entonces es decimal
                 if((esNumero(palabra))&&!(palabra.startsWith("$"))){
-                    //System.out.println(palabra+" Es un operando numérico (decimal)");
                     //Se convierte a número decimal
                     int opN=Integer.parseInt(palabra);
-                    //System.out.println(op+" Es el operando decimal sin #");
                     //Se convierte el número decimal a hexadecimal y como cadena
                     op=Integer.toHexString(opN).toUpperCase();
-                    //System.out.println(op+" Es el operando en hexadecimal");
                 }
                 
                 //Si es hexadecimal, se quita el signo de pesos
                 if(palabra.startsWith("$")){
                     palabra=palabra.substring(1);
-                    //System.out.println("Palabra sin $:"+palabra);
                     op=palabra;
                     hex=true;
                 }
                 
                 //En caso de ser caracter
                 if(palabra.startsWith("'")){
-                    //System.out.println(palabra+" Es operando ASCII");
                     
                     //Se utiliza la cadena aux para separar #' del operando
                     palabra=palabra.substring(1);
-                    //System.out.println(palabra+" Es el caracter");
                     
                     //Se comprueba si el operando es un solo caracter
                     if(palabra.length()==1){
                         char character = palabra.charAt(0);
-                        //System.out.println("El caracter es: "+character);
                         
                         //Se convierte el caracter a decimal
                         int ascii = (int)character;
-                        //System.out.println("El valor en ASCII es: "+ ascii);
                         
                         //Se convierte el decimal a hexadecimal y se guarda como cadena de mayúsculas
                         op= Integer.toHexString(ascii).toUpperCase();
-                        //System.out.println(op+" Es el operando caracter en hexadecimal");
                         cha=true;
                         
                     }else{
@@ -173,7 +141,6 @@ public class Inmediato {
                     if(variables.containsKey(palabra)){
                         //El operando es una constante porque tenía #
                         op=variables.get(palabra);
-                        //System.out.println("El operando "+palabra+" es una constante con valor: "+op);
                     }else if(((!variables.containsKey(palabra))&&(!hex))&&(!esNumero(palabra))&&(!cha)){
                         String mensaje = "\u001B[31m Error 001: CONSTANTE INEXTISTENTE\u001B[0m\n";
                         //Guardamos la salida de la primer pasada
@@ -190,7 +157,6 @@ public class Inmediato {
                     if(variables.containsKey(palabra)){
                         //El operando es una variable porque no tenía #
                         op=variables.get(palabra);
-                        //System.out.println("El operando "+palabra+" es una variable con valor: "+op);
                     }else if(((!variables.containsKey(palabra))&&(!hex))&&(!esNumero(palabra))&&(!cha)){
                         String mensaje = "\u001B[31m Error 002: VARIABLE INEXTISTENTE\u001B[0m\n";
                         //Guardamos la salida de la primer pasada
@@ -207,7 +173,6 @@ public class Inmediato {
                         //Extendido
                         if(BytesExtendido.get(instruccion)==(op.length()/2)&&(op.length()%2==0)){
                             //Si coinciden, se agrega a la cadena que será regresada
-                            //System.out.println(instruccion+" Es instrucción de Extendido porque el op: "+op+" coincide con la lista");
                             String mensaje = "\n\u001B[45;30m"+newLine+"\u001B[0m";
                             newLine=newLine.concat(op);
                             mensaje = mensaje + "\u001B[35m"+op+"\u001B[0m"+"\t\t\t"+line+"\n";
@@ -224,8 +189,6 @@ public class Inmediato {
                         //Directo
                         if(BytesDirecto.get(instruccion)==(op.length()/2)&&(op.length()%2==0)){
                             //Si coinciden, se agrega a la cadena que será regresada
-                            //System.out.println(instruccion+" Es instrucción de Directo porque el op: "+op+" coincide con la lista");
-                            //System.out.println("\u001B[43;30m 43 Fondo en Amarillo (Yellow) con texto en negro u001B\u001B[0m");
                             String mensaje = "\n\u001B[46;30m"+newLine+"\u001B[0m";
                             newLine=newLine.concat(op);
                             mensaje = mensaje + "\u001B[36m"+op+"\u001B[0m"+"\t\t\t"+line+"\n";
@@ -242,8 +205,6 @@ public class Inmediato {
                         //Inmediato
                         if(BytesInmediato.get(instruccion)==(op.length()/2)&&(op.length()%2==0)){
                             //Si coinciden, se agrega a la cadena que será regresada
-                            
-                            //System.out.println(instruccion+" Es instrucción de Inmediato porque el op: "+op+" coincide con la lista");
                             String mensaje = "\n\u001B[43;30m"+newLine+"\u001B[0m";
                             newLine=newLine.concat(op);
                             mensaje = mensaje + "\u001B[33m"+op+"\u001B[0m"+"\t\t\t"+line+"\n";
@@ -261,12 +222,8 @@ public class Inmediato {
                         if((imm)){
                             //Tenía #, entonces es del modo inmediato
                             newLine=newLine.concat(Inmediato.get(instruccion));
-                            //System.out.println(instruccion+" Es instrucción del modo inmediato porque el op tiene #.");
-                            //System.out.println("La longitud del operando "+op+" es: "+op.length());
-                            //System.out.println("La longitud en bytes debe ser: +"+BytesInmediato.get(instruccion));
                             if((BytesInmediato.containsKey(instruccion))&&(BytesInmediato.get(instruccion)==(op.length()/2)&&(op.length()%2==0))){
                                 //Si coinciden, se agrega a la cadena que será regresada
-                                //System.out.println("El operando coincide con la lista de Inmediato");
                                 String mensaje = "\n\u001B[43;30m"+newLine+"\u001B[0m";
                                 newLine=newLine.concat(op);
                                 mensaje = mensaje +"\u001B[33m"+op+"\u001B[0m"+"\t\t\t"+line+"\n";
@@ -287,15 +244,8 @@ public class Inmediato {
                         }else{
                             //No tenía #, entonces puede ser de los modos directo o extendido
                             
-                            //System.out.println("Lista bytesdirecto: \n"+BytesDirecto);
-                            //System.out.println("Lista bytesextendido: \n"+BytesExtendido);
-                            
-                            //System.out.println("La longitud del operando "+op+" es: "+op.length()/2);
-                            
                             if((BytesDirecto.containsKey(instruccion))&(BytesDirecto.get(instruccion))==(op.length()/2)&(op.length()%2==0)){
                                 //Si coinciden, se agrega a la cadena que será regresada
-                            
-                                //System.out.println(instruccion+" Es instrucción de Directo porque el op: "+op+" coincide con la lista");
                             
                                 newLine=newLine.concat(Directo.get(instruccion));
                                 String mensaje = "\n\u001B[46;30m"+newLine+"\u001B[0m";
@@ -310,8 +260,6 @@ public class Inmediato {
                                 metodosDeLectura.salidas.add(outPut);
                             }else if((BytesExtendido.containsKey(instruccion))&&(BytesExtendido.get(instruccion)==(op.length()/2)&&(op.length()%2==0))){
                                 //Si coinciden, se agrega a la cadena que será regresada
-                            
-                                //System.out.println(instruccion+" Es instrucción de Extendido porque el op: "+op+" coincide con la lista");
                             
                                 newLine=newLine.concat(Extendido.get(instruccion));
                                 String mensaje = "\n\u001B[45;30m"+newLine+"\u001B[0m";
@@ -357,9 +305,7 @@ public class Inmediato {
             
             return line+"\n\t\t\t^Error 005: INSTRUCCIÓN CARECE DE  OPERANDO(S)";
         }
-        //System.out.println("El número total de palabras leídas es "+numPalabra);
         newLine=newLine.concat("\t\t\t"+line);
-        //System.out.println("La cadena generada y regresada es: \n\n"+newLine+"\n");
         return newLine;
     }
     

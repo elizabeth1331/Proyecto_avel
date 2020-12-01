@@ -53,9 +53,6 @@ public class Relativo {
             String instruccion="";
             
             palabra=palabra.toUpperCase();
-            //System.out.println("La palabra es: "+palabra);
-            
-            //System.out.println("Instrucción del modo REL");
             
             //Cálculo del numero de memoria utilizado hasta el momento
             metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
@@ -79,8 +76,6 @@ public class Relativo {
                 }else if (i==2){
                     inicio = inicio + palabra + "\t";
                     posMem = Integer.parseInt(palabra,16);
-                    //System.out.println("PosMem= "+posMem);
-                    //System.out.println("Inicio : " + ini);
                 }
             }
             //Guardamos el resto de la línea que corresponde a la línea original
@@ -97,7 +92,6 @@ public class Relativo {
                     //Guardamos la instrucción
                     instruccion = palabra;
                 }else if(numPalabra==2){
-                    //System.out.println(palabra);
                     if(palabra.startsWith("*")){
                         //Lo demás es un comentario así que no tiene operandos
                         System.out.println(newLine+"\n\t\t\t^ \u001B[31m Error 005: INSTRUCCIÓN CARECE DE  OPERANDO(S) \u001B[0m");
@@ -140,7 +134,6 @@ public class Relativo {
         
         //Buscar si existe esa etiqueta                    
         pos = VCE.buscarEtiqueta(palabra);
-        //System.out.println("pos: " + pos);
         if (pos == 0){
             error = true;
             System.out.println(palabra+"\n\t\t\t^\u001B[31m Error 003: ETIQUETA INEXISTENTE \u001B[0m");
@@ -152,13 +145,10 @@ public class Relativo {
             
             if (pos<numMem){
                 //Caso de salto negativo
-                //System.out.println("El salto es negativo");
                 salto = (numMem+2)-pos;
-                //System.out.println("El salto es: "+ salto);
                 if (salto <= 127){
                     error = false;
                     String binario = Integer.toBinaryString(salto);
-                    //System.out.println("Binario antes: "+binario);
                    
                 //Pasamos el String a un arreglo de caracteres, llenando los espacios vacíos con ceros
                     int tamaño = binario.length();
@@ -185,11 +175,8 @@ public class Relativo {
                     StringBuffer bin = new StringBuffer();
                     for (int i=0;i<aBinario.length;i++){
                         bin =bin.append(aBinario[i]);
-                        //System.out.println(aBinario[i]);
                     }
                     binario = bin.toString();
-                    //System.out.println(bin);
-                    //System.out.println("Num bin: "+ binario);
                     //Convertimos la cadena binaria a decimal
                     int decimal=Integer.parseInt(binario,2);
                     //Le sumamos 1
@@ -209,7 +196,6 @@ public class Relativo {
                 }
             }else{
                 //Caso de salto positivo
-                //System.out.println("El salto es positivo");
                 salto = pos - (numMem+2);
                 if (salto <= 128){
                     error = false;
