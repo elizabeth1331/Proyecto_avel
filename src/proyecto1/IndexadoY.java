@@ -26,7 +26,6 @@ public class IndexadoY {
     
     public String revisarLineaY(String line, Mnemonicos m, Hashtable<String,String> variables, int numMemoria){
         
-    
         IndexadoY=m.LeerOpcode("ListaIndexadoY.txt");
         BytesIndexadoY=m.LeerBytes("ListaIndexadoY.txt");
         
@@ -260,7 +259,7 @@ public class IndexadoY {
        
         if (e==true && nm==true && co==true){
             //Cálculo del número de espacio en memoria utilizado hasta el momento
-            System.out.println(BytesIndexadoY.get(instruccion)+" "+IndexadoY.get(instruccion));
+            //System.out.println(BytesIndexadoY.get(instruccion)+" "+IndexadoY.get(instruccion));
                 metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + BytesIndexadoY.get(instruccion);
         }else{
             //Cálculo del número de espacio en memoria utilizado hasta el momento

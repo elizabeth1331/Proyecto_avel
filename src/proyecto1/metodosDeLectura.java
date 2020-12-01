@@ -88,11 +88,8 @@ public class metodosDeLectura {
                         error = GuardarVariables(line, variables);
                 }else if(line.startsWith("\t")||line.startsWith(" ")){
                     String lineAux=line;
-                    while(lineAux.startsWith(" ")){
+                    while(lineAux.startsWith(" ")||lineAux.startsWith("\t")){
                             lineAux=lineAux.substring(1);
-                    }
-                    while(lineAux.startsWith("\t")){
-                            lineAux=lineAux.replace("\t","");
                     }
                     if(lineAux.startsWith("*")){
                      //No imprimimos la memoria
@@ -186,7 +183,7 @@ public class metodosDeLectura {
                             lineAux=lineAux.replace("END","");
                         if(lineAux.contains("end"))
                             lineAux=lineAux.replace("end","");
-                        while(lineAux.startsWith(" ")){
+                        while(lineAux.startsWith(" ")||lineAux.startsWith("\t")){
                             lineAux=lineAux.substring(1);
                         }
                         if(lineAux.startsWith("*")||lineAux.equals("")){
@@ -198,7 +195,6 @@ public class metodosDeLectura {
                             Output outPut = new Output();
                             outPut.mensaje = mensaje;
                             metodosDeLectura.salidas.add(outPut);
-                            
                         }
                         //No imprimimos la memoria
                         memHexaAux = "  ";
@@ -511,7 +507,10 @@ public class metodosDeLectura {
             op=EsInstruccion(palabra,m);
             switch (op){
                 case 0:
-                    System.out.println("\u001B[31m Error 004: MNEMÓNICO INEXISTENTE\u001B[0m");
+                    String mensaje=line+"\n\t\t\t^\u001B[31m Error 004: MNEMÓNICO INEXISTENTE\u001B[0m";
+                    Output outPut = new Output();
+                    outPut.mensaje = mensaje;
+                    metodosDeLectura.salidas.add(outPut);
                     newLine=line+"\n\t\t\t^Error 004: MNEMÓNICO INEXISTENTE";
                     break;
                 case 1:
@@ -590,7 +589,10 @@ public class metodosDeLectura {
                             if(Saux.length()==2||Saux.length()==4){
                                valor=Saux; 
                             }else{
-                                System.out.println("\u001B[31m Error: LONGITUD DE VARIABLE INCORRECTA\u001B[0m");
+                                String mensaje=line+"\n\t\t\t^\u001B[31m Error: LONGITUD DE VARIABLE INCORRECTA\u001B[0m";
+                                Output outPut = new Output();
+                                outPut.mensaje = mensaje;
+                                metodosDeLectura.salidas.add(outPut);
                                 return line+"\n\t\t\t^Error: LONGITUD DE VARIABLE INCORRECTA";
                             }
                            
@@ -607,7 +609,7 @@ public class metodosDeLectura {
                         metodosDeLectura.salidas.add(outPut);
                         return line + "\n\t\t\t^Error: Variable o constante repetida.";
                     }else{
-                        String mensaje = "\033[0;1m"+valor+"          "+"\u001B[0m"+line;
+                        String mensaje = "\033[0;1m"+valor+"          "+"\u001B[0m"+line+"\n";
                         //Guardamos la salida de la primer pasada
                         Output outPut = new Output();
                         outPut.mensaje = mensaje;

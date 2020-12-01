@@ -37,7 +37,7 @@ public class Excepciones {
         ExcepDirecto=m.LeerOpcode("ListaExcepDirecto.txt");
         ExcepIndexadoX=m.LeerOpcode("ListaExcepIndexadoX.txt");
         ExcepIndexadoY=m.LeerOpcode("ListaExcepIndexadoY.txt");
-        
+        System.out.println("");
         //Palabra nos sirve para separar la linea en palabras y contabilizarlas
         String palabra;
         String palabraNueva = ""; //Para poder recorrer una palabra y visualizar el operando para discernir que tipo de opcode tendra
@@ -80,7 +80,6 @@ public class Excepciones {
                 metodosDeLectura.salidas.add(outPut);
                 return line + "\n\t\t\t^ERROR 005: INSTRUCCIÓN CARECE DE  OPERANDO(S)";
             }else if(numTotalPalabra<=2){
-                System.out.println("");
                 mensaje= line+"\n\t\t\t^\u001B[31m Error: Los mnemonicos de excepción deben tener más de un operando. \u001B[0m\n";
                 //Guardamos la salida de la primer pasada
                 Output outPut = new Output(mensaje);
@@ -519,7 +518,7 @@ public class Excepciones {
                                 metodosDeLectura.numMemoria = metodosDeLectura.numMemoria + 2;
                                 
                                     if(palabraNueva.contains("#")){
-                                        System.out.println(line+"\n\t\t\t^\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo. \u001B[0m\n");
+                                        mensaje=line+"\n\t\t\t^\u001B[31m Error : Las excepciones SOLO estan catalogadas en indexado o directo. \u001B[0m\n";
                                         //Guardamos la salida de la primer pasada
                                         Output outPut = new Output(mensaje);
                                         metodosDeLectura.salidas.add(outPut);

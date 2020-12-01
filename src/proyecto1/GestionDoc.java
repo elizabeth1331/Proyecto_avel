@@ -22,7 +22,7 @@ public class GestionDoc {
         String f;
         File archivo=new File(fd);
        
-            System.out.print( archivo.getAbsolutePath());
+            //System.out.print( archivo.getAbsolutePath());
             if(archivo.exists()){
                f = archivo.getAbsolutePath();
                op.Lectura(f);

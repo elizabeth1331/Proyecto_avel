@@ -156,7 +156,7 @@ metodosDeLectura lectura = new metodosDeLectura();
     
         try {
 
-            File objetofile = new File ("Resúmenes.pdf");
+            File objetofile = new File ("Reporte.pdf");
             Desktop.getDesktop().open(objetofile);
 
         }catch (IOException ex) {
