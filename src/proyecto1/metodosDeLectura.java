@@ -124,11 +124,15 @@ public class metodosDeLectura {
                                 break;
                             }
                             if(numP==1){
-                                error= memHexa + "\t" + line;
+                                error="\n"+ memHexa + "\t" + line;
                             }else{
-                                error=line+"\n\t\t\t^Error: Sintaxis incorrecta";
+                                error=line+"\u001B[31m\n\t\t\t^Error: Sintaxis incorrecta";
                             }
                         }
+                        mensaje=error+"\n";
+                        Output outPut = new Output();
+                        outPut.mensaje = mensaje;
+                        metodosDeLectura.salidas.add(outPut);
                     }else if(lineAux.startsWith("FCB")||lineAux.startsWith("fcb")){
                         boolean bien=false;
                         int numB = 0;
@@ -160,7 +164,7 @@ public class metodosDeLectura {
                             }else{
                                 bien=false;
                                 error="";
-                                error=line+"\n\t\t\t^Error: Sintaxis incorrecta";
+                                error=line+"\u001B[31m\n\t\t\t^Error: Sintaxis incorrecta\u001B[0m";
                                 memHexaAux=" ";
                                 break;
                             }
@@ -172,12 +176,15 @@ public class metodosDeLectura {
                             error = line;
                         }else if(bien){
                             //Se concatena la original porque la auxiliar no tiene la instruccion fcb
-                            
-                            error=error+line;
+                            error=error+"\t\t\t"+line;
                             //Se debe calcular la dirección porque tiene operandos
                             numMemoria = numMemoria + numB;
                             memHexaAux=Integer.toHexString(inicio+numMemoria).toUpperCase();
                         }
+                        mensaje=error+"\n";
+                        Output outPut = new Output();
+                        outPut.mensaje = mensaje;
+                        metodosDeLectura.salidas.add(outPut);
                     }else if(lineAux.startsWith("END")||lineAux.startsWith("end")){
                         if(lineAux.contains("END"))
                             lineAux=lineAux.replace("END","");
@@ -189,17 +196,18 @@ public class metodosDeLectura {
                         if(lineAux.startsWith("*")||lineAux.equals("")){
                             end=true;
                             error=line;
+                            mensaje=error;
                         }else{
                             mensaje = line + "\u001B[31m\n\t\t\t^Error: Sintaxis incorrecta.\u001B[0m\n";
                             //Guardamos la salida de la primer pasada
-                            Output outPut = new Output();
-                            outPut.mensaje = mensaje;
-                            metodosDeLectura.salidas.add(outPut);
                         }
                         //No imprimimos la memoria
                         memHexaAux = "  ";
+                        Output outPut = new Output();
+                        outPut.mensaje = mensaje;
+                        metodosDeLectura.salidas.add(outPut);
                     }
-                else{
+                    else{
                         memHexa = Integer.toHexString(inicio+numMemoria).toUpperCase();
                         memHexaAux = memHexa;
                         error = DifModoDeDireccionamiento(line, m, numMemoria, VCE, num, inicio);
@@ -507,7 +515,7 @@ public class metodosDeLectura {
             op=EsInstruccion(palabra,m);
             switch (op){
                 case 0:
-                    String mensaje=line+"\n\t\t\t^\u001B[31m Error 004: MNEMÓNICO INEXISTENTE\u001B[0m";
+                    String mensaje=line+"\n\t\t\t^\u001B[31m Error 004: MNEMÓNICO INEXISTENTE\u001B[0m"+"\n";
                     Output outPut = new Output();
                     outPut.mensaje = mensaje;
                     metodosDeLectura.salidas.add(outPut);
@@ -589,7 +597,7 @@ public class metodosDeLectura {
                             if(Saux.length()==2||Saux.length()==4){
                                valor=Saux; 
                             }else{
-                                String mensaje=line+"\n\t\t\t^\u001B[31m Error: LONGITUD DE VARIABLE INCORRECTA\u001B[0m";
+                                String mensaje=line+"\n\t\t\t^\u001B[31m Error: LONGITUD DE VARIABLE INCORRECTA\u001B[0m\n";
                                 Output outPut = new Output();
                                 outPut.mensaje = mensaje;
                                 metodosDeLectura.salidas.add(outPut);
@@ -602,14 +610,14 @@ public class metodosDeLectura {
                     //otra constante o variable con el mismo nombre
                     boolean error = GuardarVariablesH(clave,valor,variables);
                     if (error){
-                        String mensaje = line + "\u001B[31m\n\t\t\t^Error: Variable o constante repetida.\u001B[0m\n";
+                        String mensaje = "\n"+line + "\u001B[31m\n\t\t\t^Error: Variable o constante repetida.\u001B[0m\n";
                         //Guardamos la salida de la primer pasada
                         Output outPut = new Output();
                         outPut.mensaje = mensaje;
                         metodosDeLectura.salidas.add(outPut);
                         return line + "\n\t\t\t^Error: Variable o constante repetida.";
                     }else{
-                        String mensaje = "\033[0;1m"+valor+"          "+"\u001B[0m"+line+"\n";
+                        String mensaje = "\n\033[0;1m"+valor+"          "+"\u001B[0m"+line;
                         //Guardamos la salida de la primer pasada
                         Output outPut = new Output();
                         outPut.mensaje = mensaje;

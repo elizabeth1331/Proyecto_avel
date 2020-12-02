@@ -37,7 +37,7 @@ public class Excepciones {
         ExcepDirecto=m.LeerOpcode("ListaExcepDirecto.txt");
         ExcepIndexadoX=m.LeerOpcode("ListaExcepIndexadoX.txt");
         ExcepIndexadoY=m.LeerOpcode("ListaExcepIndexadoY.txt");
-        System.out.println("");
+        
         //Palabra nos sirve para separar la linea en palabras y contabilizarlas
         String palabra;
         String palabraNueva = ""; //Para poder recorrer una palabra y visualizar el operando para discernir que tipo de opcode tendra
@@ -488,7 +488,7 @@ public class Excepciones {
                                             newLine2=newLine2.concat(op); //Operando
                                         }
                                     }else{
-                                            mensaje = "\n\t\t\t^\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
+                                            mensaje = line + "\n\t\t\t^\u001B[31m Error: Error de sintaxis. \u001B[0m\n";
                                             //Guardamos la salida de la primer pasada
                                             Output outPut = new Output(mensaje);
                                             metodosDeLectura.salidas.add(outPut);
@@ -820,10 +820,10 @@ public class Excepciones {
                     StringBuffer bin = new StringBuffer();
                     for (int i=0;i<aBinario.length;i++){
                         bin =bin.append(aBinario[i]);
-                        System.out.println(aBinario[i]);
+                        //System.out.println(aBinario[i]);
                     }
                     binario = bin.toString();
-                    System.out.println(bin);
+                    //System.out.println(bin);
                     int decimal=Integer.parseInt(binario,2);
                     //Le sumamos 1
                     decimal = decimal +1;

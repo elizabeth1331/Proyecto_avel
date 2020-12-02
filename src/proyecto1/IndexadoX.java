@@ -79,9 +79,9 @@ public class IndexadoX {
                     lc=lc.concat(palabra);
                     
                 //Caso donde no se trata de una constante o variable
-                    if(recortarCS(palabra, 2).startsWith("$")== true) {
+                    if(recortarCS(palabra,1).startsWith("$")== true){
                         
-                            int n=recortarSS(palabra, 2).length();
+                            int n=recortarSS(palabra,2).length();
                         // Se transforma la palabra a cadena
                             char[] pl = palabra.toCharArray();
                             char[] auxPl=new  char[n-1];
@@ -121,7 +121,7 @@ public class IndexadoX {
                              
                         }
                 //Error de sintaxis
-                if(true==(esCoV(recortarCS(palabra, 2)))){
+                if(true==(esCoV(recortarCS(palabra, 1)))){
                              
                                 String mensaje = line+"\n\t\t\t^\u001B[31m Error 005: Error 000: ERROR DE SINTAXIS\u001B[0m\n";
                                 //Guardamos la salida de la primer pasada
@@ -132,7 +132,7 @@ public class IndexadoX {
                                 return line+"\n\t\t\t^Error 005: Error 000: ERROR DE SINTAXIS";
                     }   
                 //Define si es variable
-                     if(false==(esD(recortarCS(palabra, 2))) && false==(esCoV(recortarSS(palabra, 2))) && true==(variables.containsKey(recortarCS(palabra, 2))) && esCoH(recortarCS(palabra, 2))== false && recortarCS(palabra, 2).startsWith("$")== false){ 
+                     if(false==(esD(recortarCS(palabra, 1))) && false==(esCoV(recortarSS(palabra, 1))) && true==(variables.containsKey(recortarCS(palabra, 1))) && esCoH(recortarCS(palabra, 1))== false && recortarCS(palabra, 1).startsWith("$")== false){ 
 
                                 cop=variables.get(recortarCS(palabra, 2));
                                
@@ -161,7 +161,7 @@ public class IndexadoX {
                                    }
                         }
                      
-                     if(false==(esD(recortarCS(palabra, 2))) && false==(esCoV(recortarCS(palabra, 2)))&& false==(variables.containsKey(recortarCS(palabra, 2))) && esCoH(recortarCS(palabra, 2))==false&&recortarCS(palabra, 2).startsWith("$")== false){
+                     if(false==(esD(recortarCS(palabra, 1))) && false==(esCoV(recortarCS(palabra, 1)))&& false==(variables.containsKey(recortarCS(palabra, 1))) && esCoH(recortarCS(palabra, 1))==false&&recortarCS(palabra, 1).startsWith("$")== false){
                                 String mensaje = line+"\n\t\t\t^\u001B[31m Error 001: VARIABLE INEXISTENTE\u001B[0m\n";
                                 
                                 //Guardamos la salida de la primer pasada
@@ -328,7 +328,7 @@ public boolean Hexa(String palabra){
                         // Se transforma la palabra a cadena
                             char[] p = palabra.toCharArray();
                         //se crea un arreglo para guardar la constante a buscar
-                            int v=n-no;
+                            int v=n-1;
                             char[] auxP=new  char[v];
                         
                             for (int j = 0; j < v; j++){   
