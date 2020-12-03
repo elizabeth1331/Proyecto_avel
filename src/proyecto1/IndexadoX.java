@@ -25,6 +25,7 @@ public class IndexadoX {
         
     
     public String revisarLineaX(String line, Mnemonicos m, Hashtable<String,String> variables, int numMemoria){
+        
     
         IndexadoX=m.LeerOpcode("ListaIndexadoX.txt");
         BytesIndexadoX=m.LeerBytes("ListaIndexadoX.txt");
@@ -78,20 +79,25 @@ public class IndexadoX {
                     //System.out.print(recortarCS(palabra, 2) + "-------"+ palabra + "  con # constante" + "   " +variables.containsKey(recortarCS(palabra, 2))+"\n");
                     lc=lc.concat(palabra);
                     
+                    
+                //Error de sintaxis
+                if(true==(esCoV(palabra)) || palabra.startsWith("*")== true){
+                             
+                                String mensaje = line+"\n\t\t\t^\u001B[31m Error 005: Error 000: ERROR DE SINTAXIS\u001B[0m\n";
+                                //Guardamos la salida de la primer pasada
+                                    Output outPut = new Output();
+                                    outPut.mensaje = mensaje;
+                                    metodosDeLectura.salidas.add(outPut);
+                                    e=false;
+                                return line+"\n\t\t\t^Error 005: Error 000: ERROR DE SINTAXIS";
+                    }
+                
                 //Caso donde no se trata de una constante o variable
-                    if(recortarCS(palabra,1).startsWith("$")== true){
+                    
+                    if(palabra.startsWith("$")== true) {
                         
-                            int n=recortarSS(palabra,2).length();
-                        // Se transforma la palabra a cadena
-                            char[] pl = palabra.toCharArray();
-                            char[] auxPl=new  char[n-1];
-                        
-                        //Nos quita $ 
-                            for (int j = 0; j < n-1; j++){   
-                              auxPl[j]=pl[j+1];
-                              }    
-                        //Transforma a dato correcto 
-                            aux = String.valueOf(auxPl);
+                            
+                            aux = recortarSS(palabra, 3);
                         
                         //Concatena el valor con su opcode correspondiente
                                 newLine=newLine.concat(aux);
@@ -109,7 +115,7 @@ public class IndexadoX {
                                 }else{
                                 //avisa que el tamaño es incorrecto y muestra el valor incorrecto 
                                    newLine=palabra;
-                                   String mensaje = line+"\n\t\t\t^\u001B[31m Error 007: MAGNITUD DE  OPERANDO ERRONEA\u001B[0m\n";                                   
+                                   String mensaje = line+"\n\t\t\t^\u001B[31m Error 007: MAGNITUD DE  OPERANDO ERRONEA\u001B[0m\n\n";                                   
                                     //Guardamos la salida de la primer pasada
                                         Output outPut = new Output();
                                         outPut.mensaje = mensaje;
@@ -120,23 +126,15 @@ public class IndexadoX {
                                 }  
                              
                         }
-                //Error de sintaxis
-                if(true==(esCoV(recortarCS(palabra, 1)))){
-                             
-                                String mensaje = line+"\n\t\t\t^\u001B[31m Error 005: Error 000: ERROR DE SINTAXIS\u001B[0m\n";
-                                //Guardamos la salida de la primer pasada
-                                    Output outPut = new Output();
-                                    outPut.mensaje = mensaje;
-                                    metodosDeLectura.salidas.add(outPut);
-                                    e=false;
-                                return line+"\n\t\t\t^Error 005: Error 000: ERROR DE SINTAXIS";
-                    }   
+                
+                    
                 //Define si es variable
-                     if(false==(esD(recortarCS(palabra, 1))) && false==(esCoV(recortarSS(palabra, 1))) && true==(variables.containsKey(recortarCS(palabra, 1))) && esCoH(recortarCS(palabra, 1))== false && recortarCS(palabra, 1).startsWith("$")== false){ 
+                     if(false==(esD(recortarCS(palabra, 2)))  && true==(variables.containsKey(recortarCS(palabra, 2))) && esCoH(recortarCS(palabra, 2))== false && recortarCS(palabra, 2).startsWith("$")== false){ 
 
                                 cop=variables.get(recortarCS(palabra, 2));
                                
                                 //Se comprueba que la longitud del operando coincida con el necesario por la instrucción
+                                    //System.out.println("La instruccion es "+instruccion +" y su numero de bytes debe ser: "+BytesIndexadoY.get(instruccion));
 
                                    newLine=newLine.concat(cop);
 
@@ -161,7 +159,7 @@ public class IndexadoX {
                                    }
                         }
                      
-                     if(false==(esD(recortarCS(palabra, 1))) && false==(esCoV(recortarCS(palabra, 1)))&& false==(variables.containsKey(recortarCS(palabra, 1))) && esCoH(recortarCS(palabra, 1))==false&&recortarCS(palabra, 1).startsWith("$")== false){
+                     if(false==(esD(recortarCS(palabra, 2)))&& false==(variables.containsKey(recortarCS(palabra, 2))) && esCoH(recortarCS(palabra, 2))==false&&recortarCS(palabra, 2).startsWith("$")== false){
                                 String mensaje = line+"\n\t\t\t^\u001B[31m Error 001: VARIABLE INEXISTENTE\u001B[0m\n";
                                 
                                 //Guardamos la salida de la primer pasada
@@ -212,6 +210,7 @@ public class IndexadoX {
                                 int opN=Integer.parseInt(recortarCS(palabra, 2));
                             //Se convierte el número decimal a hexadecimal y como cadena
                                 aux=Integer.toHexString(opN).toUpperCase();
+                                //System.out.println(aux+ " ---"+ newLine+" operanco en Hexadecimal");
                             //Concatena el valor con su opcode correspondiente
                                 newLine=newLine.concat(aux);
                             //Compara para ver si el numero de bytes coincide 
@@ -321,14 +320,14 @@ public boolean Hexa(String palabra){
     }
     
     
-    //Funcion que quita ',x' / ',X', sin #
+    //Funcion que quita ',x' / ',X', sin $
     public String recortarCS(String palabra, int no){
         
                             int n=palabra.length();
                         // Se transforma la palabra a cadena
                             char[] p = palabra.toCharArray();
                         //se crea un arreglo para guardar la constante a buscar
-                            int v=n-1;
+                            int v=n-no;
                             char[] auxP=new  char[v];
                         
                             for (int j = 0; j < v; j++){   
@@ -339,8 +338,7 @@ public boolean Hexa(String palabra){
         return nPalabra;
         
     }
-    
-    //Funcion que  quita # y ',x' / ',X'
+    //Funcion que  quita $ y ',x' / ',X'
     public String recortarSS(String palabra, int no){
         
                             int n=palabra.length();
@@ -356,5 +354,8 @@ public boolean Hexa(String palabra){
                         //Transformar a un dato String
                              String nPalabra = String.valueOf(auxP);
         return nPalabra;
+        
     }
+    
+   
 }

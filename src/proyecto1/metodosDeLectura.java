@@ -124,7 +124,7 @@ public class metodosDeLectura {
                                 break;
                             }
                             if(numP==1){
-                                error="\n"+ memHexa + "\t" + line;
+                                error=memHexa + "\t" + line;
                             }else{
                                 error=line+"\u001B[31m\n\t\t\t^Error: Sintaxis incorrecta";
                             }
@@ -173,7 +173,7 @@ public class metodosDeLectura {
                             //No se calcula la dirección porque no tiene operandos
                             memHexaAux=" ";
                             //Se imprime la original porque la auxiliar está vacia
-                            error = line;
+                            error = line+"\u001B[31m\n\t\t\t^Error: Sintaxis incorrecta\u001B[0m";
                         }else if(bien){
                             //Se concatena la original porque la auxiliar no tiene la instruccion fcb
                             error=error+"\t\t\t"+line;
@@ -401,7 +401,7 @@ public class metodosDeLectura {
                         String word=st.nextToken();
                         noWord++;
                         if((aux.contains("EQU")||aux.contains("equ"))&&noWord==1&&word.length()%2==0){
-                            s19=s19.concat(word);
+                            //s19=s19.concat(word);
                             break;
                         }else if(aux.equals("")){
                             //no se hace nada porque es un salto de línea
@@ -615,9 +615,9 @@ public class metodosDeLectura {
                         Output outPut = new Output();
                         outPut.mensaje = mensaje;
                         metodosDeLectura.salidas.add(outPut);
-                        return line + "\n\t\t\t^Error: Variable o constante repetida.";
+                        return line + "\n\t\t\t^Error: Variable o constante repetida."+"\n";
                     }else{
-                        String mensaje = "\n\033[0;1m"+valor+"          "+"\u001B[0m"+line;
+                        String mensaje = "\n\033[0;1m"+valor+"          "+"\u001B[0m"+line+"\n";
                         //Guardamos la salida de la primer pasada
                         Output outPut = new Output();
                         outPut.mensaje = mensaje;

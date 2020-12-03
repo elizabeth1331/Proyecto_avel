@@ -4,20 +4,17 @@
 4 A  	10          DDRR   equ   $10
 5 A  	DDRR   equ   $20
 			^Error: Variable o constante repetida.
+
 6 A  	20          DDRI   equ   $20
 7 A  	*DDRF   equ   $201
 8 A  	*DR   eQu   $11 
 9 A  	31          ABCD   equ $31
 10 A  	
-11 A  	
-8000		ORG $8000 *ia me quiero morir
+11 A  	8000		ORG $8000 *ia me quiero morir
 12 A  	
 13 A 8000	              
 14 A 8000	89FF			    ADCA #$FF *hola
 15 A 8002	26FC			BNE CICLO 
-8000		ORG $8000 *ia me quiero morir
-12 A  	
-13 A 8000	              
 18 A  	*    YYY #$F1
 19 A  	    *bcc #$F2
 20 A  	*    ADCA #DDRA
@@ -51,53 +48,52 @@
 47 A 8027	    LdAa #DDRR,x *reconice constante ----------------- correcto
 			^Error 005: Error 000: ERROR DE SINTAXIS
 48 A  	    *LdAa 1331,X *decimal y tamaño incorrecto ----------------- correcto
-49 A 8027	    LdAa ABCD,X *reconice variable ----------------- correcto 
-			^Error 001: VARIABLE INEXISTENTE
-50 A 8027	    LdAa #ABCD,X *reconice constante ----------------- correcto
+49 A 8027	A631			    LdAa ABCD,X *reconice variable ----------------- correcto 
+50 A 8029	    LdAa #ABCD,X *reconice constante ----------------- correcto
 			^Error 005: Error 000: ERROR DE SINTAXIS
-51 A 8027	    LDAA DDRR,X *   reconice variable ----------------- correcto
-			^Error 001: VARIABLE INEXISTENTE
+51 A 8029	A610			    LDAA DDRR,X *   reconice variable ----------------- correcto
 52 A  	    *LDD $17A,X  * longitud erronea----------------- correcto
 53 A  	    *LDAA DDAD,X *variable inexistente ----------------- correcto
-54 A 8027	EC17			    LDD $17,x * es octal ----------------- correcto
-55 A 8029	ECA7			    LDD $A7,X * es hexagecimal ----------------- correcto
+54 A 802B	EC17			    LDD $17,x * es octal ----------------- correcto
+55 A 802D	ECA7			    LDD $A7,X * es hexagecimal ----------------- correcto
 56 A  	    *ldn $172,X  *no existe mnemonico ----------------- correcto
 57 A  	
 58 A  	    *LDAB $672,y *tamaño incorrecto, mnemomico existente, no usa variable ----------------- correcto
-59 A 802B	CDEE6F			    LDX 111,Y  **tamaño correcto, mnemomico existente, valor decimal  por probar ----------------- correcto
-60 A 802B	
+59 A 802F	CDEE6F			    LDX 111,Y  **tamaño correcto, mnemomico existente, valor decimal  por probar ----------------- correcto
+60 A 802F	
 61 A  	    *LDAA #DDRF,y *tamaño incorrecto, mnemomico existente, usa variable ----------------- correcto
-62 A 802E	    LDAA #DDRI,Y *tamaño correcto, mnemomico existente, usa variable ----------------- correcto
+62 A 8032	    LDAA #DDRI,Y *tamaño correcto, mnemomico existente, usa variable ----------------- correcto
 			^Error 005: Error 000: ERROR DE SINTAXIS
-63 A 802E	              
+63 A 8032	              
 64 A  	    *LDD $172,Y *tamaño incorrecto, mnemomico existente, no usa variable ----------------- correcto
-65 A 802E	18EC84			    LDD 132,Y  *tamaño correcto, mnemomico existente, valor decimal  ----------------- correcto
-66 A 8031	              
-67 A 8031	    LdAa #DDRR,Y *reconice constante ----------------- correcto
+65 A 8032	18EC84			    LDD 132,Y  *tamaño correcto, mnemomico existente, valor decimal  ----------------- correcto
+66 A 8035	              
+67 A 8035	    LdAa #DDRR,Y *reconice constante ----------------- correcto
 			^Error 005: Error 000: ERROR DE SINTAXIS
 68 A  	    *LdAa 1331,y *decimal y tamaño incorrecto ----------------- correcto
-69 A 8031	18A631			    LdAa ABCD,Y *reconice variable ----------------- correcto 
-70 A 8034	    LdAa #ABCD,y *reconice constante ----------------- correcto
+69 A 8035	18A631			    LdAa ABCD,Y *reconice variable ----------------- correcto 
+70 A 8038	    LdAa #ABCD,y *reconice constante ----------------- correcto
 			^Error 005: Error 000: ERROR DE SINTAXIS
-71 A 8034	18A610			    LDAA DDRR,Y *   reconice variable ----------------- correcto
+71 A 8038	18A610			    LDAA DDRR,Y *   reconice variable ----------------- correcto
 72 A  	    *LDD $17A,y  * longitud erronea----------------- correcto
 73 A  	    *LDAA DDAD,y *variable inexistente ----------------- correcto
-74 A 8037	18EC17			    LDD $17,y * es octal ----------------- correcto
+74 A 803B	18EC17			    LDD $17,y * es octal ----------------- correcto
 75 A  	    *LDD $A7,y  es hexagecimal ----------------- correcto
 76 A  	    *ldn $172,y  no existe mnemonico ----------------- correcto
-77 A 803A	              
-78 A 803A	
-79 A 803A	18EC73			    LDD 's,Y * 
-80 A 803D	18EC53			    LDD 'S,y * 
+77 A 803E	              
+78 A 803E	
+79 A 803E	18EC73			    LDD 's,Y * 
+80 A 8041	18EC53			    LDD 'S,y * 
 81 A  	    *LDD 'se,Y *
-82 A 8040	              
-83 A 8040	EC73			    LDD 's,X * 
-84 A 8042	EC53			    LDD 'S,X * 
+82 A 8044	              
+83 A 8044	EC73			    LDD 's,X * 
+84 A 8046	EC53			    LDD 'S,X * 
 85 A  	    *LDD 'se,X * 
 86 A  	
 87 A  	    *FCB $14,15 *si ves esto dale like
-88 A 8047	141516			    FCB $14,$15 $16 *si ves esto dale likex2
-89 A  		FCB 
-90 A 8047					FCB *ojo aquí
+88 A 804B	141516			    FCB $14,$15 $16 *si ves esto dale likex2
+89 A  		FCB [31m
+			^Error: Sintaxis incorrecta[0m
+90 A 804B					FCB *ojo aquí
 91 A  	*    FCB esto no se puede
 92 A   		END *Esto sí se puede

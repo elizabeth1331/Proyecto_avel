@@ -244,7 +244,7 @@ public class Inmediato {
                         }else{
                             //No tenía #, entonces puede ser de los modos directo o extendido
                             
-                            if((BytesDirecto.containsKey(instruccion))&(BytesDirecto.get(instruccion))==(op.length()/2)&(op.length()%2==0)){
+                            if((BytesDirecto.containsKey(instruccion))&&(BytesDirecto.get(instruccion))==(op.length()/2)&&(op.length()%2==0)){
                                 //Si coinciden, se agrega a la cadena que será regresada
                             
                                 newLine=newLine.concat(Directo.get(instruccion));
